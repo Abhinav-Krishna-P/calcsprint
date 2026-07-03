@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import { getAvatarById } from "./AvatarSelector";
-import { Sun, Moon, LogOut, Trophy, Home, Zap } from "lucide-react";
+import { Sun, Moon, LogOut, Trophy, Home, Zap, Calendar } from "lucide-react";
 
 export const Navbar: React.FC = () => {
   const { user, userProfile, logout } = useAuth();
@@ -77,6 +77,7 @@ export const Navbar: React.FC = () => {
             <nav className="hidden md:flex gap-6 items-center h-16 pt-0.5">
               <Link to="/" className={navLinkClass("/")}>Dashboard</Link>
               <Link to="/leaderboard/letter_to_num" className={navLinkClass("/leaderboard")}>Leaderboards</Link>
+              <Link to="/timeline" className={navLinkClass("/timeline")}>Timeline</Link>
               <Link to="/profile" className={navLinkClass("/profile")}>Profile</Link>
             </nav>
           )}
@@ -154,6 +155,18 @@ export const Navbar: React.FC = () => {
           >
             <Trophy size={20} className="mb-1" />
             <span>Leaderboard</span>
+          </Link>
+
+          <Link
+            to="/timeline"
+            className={`flex flex-col items-center justify-center w-20 h-12 text-xs font-bold transition-all ${
+              isActive("/timeline") 
+                ? "text-app-primary font-bold scale-105" 
+                : "text-app-secondary"
+            }`}
+          >
+            <Calendar size={20} className="mb-1" />
+            <span>Timeline</span>
           </Link>
           
           <Link

@@ -4,7 +4,7 @@ import { useAuth } from "../context/AuthContext";
 import { getModeById } from "../questionGenerators";
 import { Card } from "../components/Card";
 import { Button } from "../components/Button";
-import { doc, getDoc, setDoc, serverTimestamp } from "firebase/firestore";
+import { doc, getDoc, setDoc, collection, addDoc, serverTimestamp } from "firebase/firestore";
 import { db } from "../config/firebase";
 import { Trophy, Clock, CheckCircle, RefreshCw, Grid, Award, AlertCircle } from "lucide-react";
 
@@ -96,6 +96,20 @@ export const Results: React.FC = () => {
             completedAt: serverTimestamp()
           });
         }
+
+        // 1b. Log session attempt historically to "history" collection
+        await addDoc(collection(db, "history"), {
+          uid: user.uid,
+          username: userProfile.username,
+          avatarId: userProfile.avatarId,
+          modeId: mode.id,
+          numQuestions: totalCount,
+          timePerQuestion,
+          correctCount,
+          accuracy,
+          totalTimeSeconds,
+          completedAt: serverTimestamp()
+        });
 
         // 2. Sync profile statistics and evaluate earned badges (happens on every session)
         const { newBadges: earned } = await updateQuizStats(

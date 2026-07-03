@@ -12,6 +12,7 @@ import Quiz from "./pages/Quiz";
 import Results from "./pages/Results";
 import Leaderboard from "./pages/Leaderboard";
 import Profile from "./pages/Profile";
+import { Timeline } from "./pages/Timeline";
 
 // Helper spinner component for routing guards
 const Loader2: React.FC<React.SVGProps<SVGSVGElement> & { size?: number }> = ({ size = 24, ...props }) => (
@@ -161,6 +162,16 @@ export const App: React.FC = () => {
             element={
               <ProtectedRoute>
                 <Profile />
+              </ProtectedRoute>
+            } 
+          />
+
+          {/* User Practice Timeline & Analytics Heatmap */}
+          <Route 
+            path="/timeline" 
+            element={
+              <ProtectedRoute>
+                <Timeline />
               </ProtectedRoute>
             } 
           />
