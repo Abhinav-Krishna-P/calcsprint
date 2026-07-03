@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>MathElite | Leaderboard &amp; Stats</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "tertiary-fixed-dim": "#bec6e0",
+                    "on-error-container": "#ffdad6",
+                    "surface-container-highest": "#323537",
+                    "error-container": "#93000a",
+                    "surface-tint": "#7bd0ff",
+                    "surface-variant": "#323537",
+                    "error": "#ffb4ab",
+                    "on-tertiary-fixed-variant": "#3f465c",
+                    "on-primary": "#00354a",
+                    "tertiary-container": "#a9b1ca",
+                    "on-secondary-fixed": "#0b1c30",
+                    "on-primary-fixed": "#001e2c",
+                    "tertiary": "#c5cce6",
+                    "on-secondary-fixed-variant": "#38485d",
+                    "on-surface": "#e0e3e5",
+                    "on-tertiary": "#283044",
+                    "surface-bright": "#363a3b",
+                    "inverse-on-surface": "#2d3133",
+                    "surface-container-lowest": "#0b0f10",
+                    "outline": "#87929a",
+                    "primary-fixed": "#c4e7ff",
+                    "outline-variant": "#3e484f",
+                    "on-error": "#690005",
+                    "secondary": "#b7c8e1",
+                    "surface": "#101415",
+                    "on-tertiary-fixed": "#131b2e",
+                    "on-tertiary-container": "#3c4459",
+                    "on-primary-fixed-variant": "#004c69",
+                    "surface-dim": "#101415",
+                    "inverse-surface": "#e0e3e5",
+                    "background": "#101415",
+                    "primary-container": "#38bdf8",
+                    "on-secondary": "#213145",
+                    "secondary-fixed": "#d3e4fe",
+                    "tertiary-fixed": "#dae2fd",
+                    "on-surface-variant": "#bdc8d1",
+                    "surface-container-low": "#191c1e",
+                    "on-secondary-container": "#a9bad3",
+                    "on-primary-container": "#004965",
+                    "inverse-primary": "#00668a",
+                    "on-background": "#e0e3e5",
+                    "surface-container": "#1d2022",
+                    "primary": "#8ed5ff",
+                    "secondary-container": "#3a4a5f",
+                    "surface-container-high": "#272a2c",
+                    "primary-fixed-dim": "#7bd0ff",
+                    "secondary-fixed-dim": "#b7c8e1"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.125rem",
+                    "lg": "0.25rem",
+                    "xl": "0.5rem",
+                    "full": "0.75rem"
+            },
+            "spacing": {
+                    "md": "16px",
+                    "margin-desktop": "64px",
+                    "lg": "24px",
+                    "margin-mobile": "16px",
+                    "base": "4px",
+                    "sm": "8px",
+                    "xs": "4px",
+                    "gutter": "20px",
+                    "xl": "40px"
+            },
+            "fontFamily": {
+                    "headline-xl": ["Inter"],
+                    "body-md": ["Inter"],
+                    "label-md": ["Inter"],
+                    "headline-md": ["Inter"],
+                    "headline-lg-mobile": ["Inter"],
+                    "body-lg": ["Inter"],
+                    "code": ["Inter"],
+                    "headline-lg": ["Inter"]
+            },
+            "fontSize": {
+                    "headline-xl": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "label-md": ["14px", {"lineHeight": "20px", "letterSpacing": "0.05em", "fontWeight": "500"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                    "headline-lg-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                    "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                    "code": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                    "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body {
+            background-color: #101415;
+            color: #e0e3e5;
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .glass-panel {
+            background: rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(12px);
+            border: 1px solid #334155;
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #101415;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #334155;
+            border-radius: 10px;
+        }
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+        .animate-float {
+            animation: float 6s ease-in-out infinite;
+        }
+    </style>
+</head>
+<body class="flex flex-col md:flex-row min-h-screen">
+<!-- SideNavBar (Desktop Only) -->
+<aside class="hidden md:flex flex-col h-screen w-64 bg-surface-container-low border-r border-outline-variant p-md sticky top-0 shrink-0">
+<div class="font-headline-sm text-headline-sm font-black text-primary mb-xl">MathElite</div>
+<div class="flex items-center gap-sm mb-xl p-sm bg-surface-container rounded-lg">
+<div class="w-10 h-10 rounded-full bg-secondary-container flex items-center justify-center overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="A professional headshot of a young student-athlete in a minimalist setting, featuring cool blue ambient lighting and a clean, high-performance academic aesthetic. The style is sharp, modern, and focused, utilizing a deep navy and slate color palette to match a professional esports analyst vibe." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBT_-eYJ9ibpVawGFK1qR4t0pcvYTPodHmWINNiYI_ngLxy2F5zkyraMkMRi89OC4KwhfsMrxg_L4DiarVeGtVc2GtgiElxIqylM7D2E9Y5lgonTkCx7vESdcfHcZ4pcQdL-ygblfD_4WO0klZnckswYWEckzSzieE96hVPMmqRwGNCUKnaZNTmWVRH9msjdy2JKnfzU11mMzG15NUOKZjnpBqoP-CqJyJBXRnOQOYLZ-F6W7iO7b2Ppae4fjMTsu67qUiANzjZAye4"/>
+</div>
+<div>
+<p class="font-label-md text-label-md text-primary font-bold">Student Athlete</p>
+<p class="text-[10px] uppercase tracking-widest text-on-surface-variant">Rank: Grandmaster</p>
+</div>
+</div>
+<nav class="flex-1 space-y-base">
+<div class="font-label-md text-label-md text-on-surface-variant px-sm py-xs uppercase tracking-widest text-[11px]">Menu</div>
+<a class="flex items-center gap-sm px-sm py-md text-on-surface-variant hover:bg-surface-container-high transition-all rounded-lg" href="#">
+<span class="material-symbols-outlined">fitness_center</span>
+<span class="font-label-md text-label-md">Drills</span>
+</a>
+<a class="flex items-center gap-sm px-sm py-md bg-secondary-container text-on-secondary-container rounded-lg" href="#">
+<span class="material-symbols-outlined">leaderboard</span>
+<span class="font-label-md text-label-md">Leaderboard</span>
+</a>
+<a class="flex items-center gap-sm px-sm py-md text-on-surface-variant hover:bg-surface-container-high transition-all rounded-lg" href="#">
+<span class="material-symbols-outlined">insights</span>
+<span class="font-label-md text-label-md">Stats</span>
+</a>
+</nav>
+<div class="mt-auto space-y-base">
+<a class="flex items-center gap-sm px-sm py-md text-on-surface-variant hover:bg-surface-container-high transition-all rounded-lg" href="#">
+<span class="material-symbols-outlined">person</span>
+<span class="font-label-md text-label-md">Profile</span>
+</a>
+<a class="flex items-center gap-sm px-sm py-md text-on-surface-variant hover:bg-surface-container-high transition-all rounded-lg" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="font-label-md text-label-md">Settings</span>
+</a>
+</div>
+</aside>
+<!-- TopAppBar (Mobile Only) -->
+<header class="flex md:hidden justify-between items-center w-full px-margin-mobile h-16 bg-surface border-b border-outline-variant sticky top-0 z-50">
+<div class="font-headline-md text-headline-md font-bold text-primary">MathElite</div>
+<button class="w-10 h-10 flex items-center justify-center text-on-surface">
+<span class="material-symbols-outlined">dark_mode</span>
+</button>
+</header>
+<!-- Main Content Canvas -->
+<main class="flex-1 w-full max-w-7xl mx-auto p-md md:p-xl space-y-lg md:space-y-xl mb-24 md:mb-0 overflow-y-auto">
+<!-- Header Section -->
+<header class="flex flex-col md:flex-row md:items-end justify-between gap-md">
+<div>
+<h1 class="font-headline-xl text-headline-xl tracking-tight text-on-surface">Global Rankings</h1>
+<p class="font-body-md text-body-md text-on-surface-variant max-w-2xl">Analyze elite performance across the scholastic gaming network. Competition resets every Monday at 00:00 UTC.</p>
+</div>
+<div class="flex gap-sm">
+<button class="bg-primary-container text-on-primary-container px-lg py-sm rounded-lg font-label-md text-label-md hover:brightness-110 transition-all">Join Tournament</button>
+<button class="border border-outline-variant text-on-surface px-lg py-sm rounded-lg font-label-md text-label-md hover:bg-surface-container-high transition-all">Share Stats</button>
+</div>
+</header>
+<!-- Bento Stats Grid -->
+<section class="grid grid-cols-1 md:grid-cols-12 gap-gutter">
+<!-- Weekly Goal Progress (Priority High) -->
+<div class="md:col-span-4 glass-panel p-lg rounded-xl flex flex-col justify-between relative overflow-hidden group">
+<div class="absolute top-0 right-0 p-lg opacity-20 group-hover:opacity-40 transition-opacity">
+<span class="material-symbols-outlined text-6xl text-primary" style="font-variation-settings: 'FILL' 1;">emoji_events</span>
+</div>
+<div>
+<p class="font-label-md text-label-md text-primary uppercase tracking-widest mb-base">Weekly Goal</p>
+<h3 class="font-headline-md text-headline-md text-on-surface">Precision Master</h3>
+</div>
+<div class="mt-xl">
+<div class="flex justify-between items-end mb-sm">
+<span class="font-headline-lg text-headline-lg text-primary">850/1000</span>
+<span class="font-label-md text-label-md text-on-surface-variant">85%</span>
+</div>
+<div class="w-full h-3 bg-surface-container-highest rounded-full overflow-hidden">
+<div class="h-full bg-primary-container transition-all duration-1000" style="width: 85%"></div>
+</div>
+<p class="mt-md font-body-md text-body-md text-on-surface-variant">150 points until <span class="text-on-surface font-bold">Lvl 4 Prestige</span></p>
+</div>
+</div>
+<!-- Speed Trend Chart -->
+<div class="md:col-span-8 glass-panel p-lg rounded-xl flex flex-col">
+<div class="flex justify-between items-start mb-lg">
+<div>
+<h3 class="font-headline-md text-headline-md text-on-surface">Speed Trend</h3>
+<p class="font-label-md text-label-md text-on-surface-variant">Avg. Responses per Minute (RPM)</p>
+</div>
+<select class="bg-surface-container-high border-none text-on-surface font-label-md text-label-md rounded-lg px-sm py-xs outline-none">
+<option>Last 7 Days</option>
+<option>Last 30 Days</option>
+</select>
+</div>
+<div class="flex-1 w-full h-48 flex items-end justify-between gap-base pt-md">
+<!-- Simple CSS Chart bars -->
+<div class="group relative flex flex-col items-center flex-1 h-full">
+<div class="bg-primary/20 w-full rounded-t-sm hover:bg-primary/40 transition-all mt-auto" style="height: 40%"></div>
+<span class="mt-sm text-[10px] text-on-surface-variant">Mon</span>
+</div>
+<div class="group relative flex flex-col items-center flex-1 h-full">
+<div class="bg-primary/20 w-full rounded-t-sm hover:bg-primary/40 transition-all mt-auto" style="height: 65%"></div>
+<span class="mt-sm text-[10px] text-on-surface-variant">Tue</span>
+</div>
+<div class="group relative flex flex-col items-center flex-1 h-full">
+<div class="bg-primary/20 w-full rounded-t-sm hover:bg-primary/40 transition-all mt-auto" style="height: 55%"></div>
+<span class="mt-sm text-[10px] text-on-surface-variant">Wed</span>
+</div>
+<div class="group relative flex flex-col items-center flex-1 h-full">
+<div class="bg-primary/20 w-full rounded-t-sm hover:bg-primary/40 transition-all mt-auto" style="height: 85%"></div>
+<span class="mt-sm text-[10px] text-on-surface-variant font-bold text-primary">Thu</span>
+</div>
+<div class="group relative flex flex-col items-center flex-1 h-full">
+<div class="bg-primary/20 w-full rounded-t-sm hover:bg-primary/40 transition-all mt-auto" style="height: 70%"></div>
+<span class="mt-sm text-[10px] text-on-surface-variant">Fri</span>
+</div>
+<div class="group relative flex flex-col items-center flex-1 h-full">
+<div class="bg-primary/20 w-full rounded-t-sm hover:bg-primary/40 transition-all mt-auto" style="height: 50%"></div>
+<span class="mt-sm text-[10px] text-on-surface-variant">Sat</span>
+</div>
+<div class="group relative flex flex-col items-center flex-1 h-full">
+<div class="bg-primary/20 w-full rounded-t-sm hover:bg-primary/40 transition-all mt-auto" style="height: 35%"></div>
+<span class="mt-sm text-[10px] text-on-surface-variant">Sun</span>
+</div>
+</div>
+</div>
+<!-- Category Accuracy Bars -->
+<div class="md:col-span-12 lg:col-span-5 glass-panel p-lg rounded-xl">
+<h3 class="font-headline-md text-headline-md text-on-surface mb-lg">Category Performance</h3>
+<div class="space-y-md">
+<div>
+<div class="flex justify-between text-label-md font-label-md mb-xs">
+<span class="text-on-surface">Mental Calculus</span>
+<span class="text-primary">92%</span>
+</div>
+<div class="w-full h-1.5 bg-surface-container-highest rounded-full">
+<div class="h-full bg-primary rounded-full" style="width: 92%"></div>
+</div>
+</div>
+<div>
+<div class="flex justify-between text-label-md font-label-md mb-xs">
+<span class="text-on-surface">Geometric Reasoning</span>
+<span class="text-secondary">78%</span>
+</div>
+<div class="w-full h-1.5 bg-surface-container-highest rounded-full">
+<div class="h-full bg-secondary rounded-full" style="width: 78%"></div>
+</div>
+</div>
+<div>
+<div class="flex justify-between text-label-md font-label-md mb-xs">
+<span class="text-on-surface">Algorithmic Logic</span>
+<span class="text-tertiary">64%</span>
+</div>
+<div class="w-full h-1.5 bg-surface-container-highest rounded-full">
+<div class="h-full bg-tertiary rounded-full" style="width: 64%"></div>
+</div>
+</div>
+<div>
+<div class="flex justify-between text-label-md font-label-md mb-xs">
+<span class="text-on-surface">Statistical Modeling</span>
+<span class="text-primary">88%</span>
+</div>
+<div class="w-full h-1.5 bg-surface-container-highest rounded-full">
+<div class="h-full bg-primary rounded-full" style="width: 88%"></div>
+</div>
+</div>
+</div>
+</div>
+<!-- Global Leaderboard Table -->
+<div class="md:col-span-12 lg:col-span-7 glass-panel rounded-xl overflow-hidden flex flex-col">
+<div class="p-lg border-b border-outline-variant flex justify-between items-center">
+<h3 class="font-headline-md text-headline-md text-on-surface">Elite Ranking</h3>
+<div class="flex gap-xs">
+<button class="p-base text-primary"><span class="material-symbols-outlined">filter_list</span></button>
+</div>
+</div>
+<div class="overflow-x-auto custom-scrollbar">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface-container-high">
+<th class="px-lg py-md font-label-md text-label-md text-on-surface-variant">Rank</th>
+<th class="px-lg py-md font-label-md text-label-md text-on-surface-variant">Player</th>
+<th class="px-lg py-md font-label-md text-label-md text-on-surface-variant">Score</th>
+<th class="px-lg py-md font-label-md text-label-md text-on-surface-variant">Status</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant">
+<tr class="hover:bg-surface-container-high transition-colors">
+<td class="px-lg py-md">
+<span class="w-8 h-8 rounded-lg bg-primary-container text-on-primary-container flex items-center justify-center font-bold text-xs">#01</span>
+</td>
+<td class="px-lg py-md">
+<div class="flex items-center gap-sm">
+<div class="w-8 h-8 rounded-full bg-outline-variant overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="A close-up portrait of a professional competitive player in a sleek, dark techwear aesthetic. The lighting features sharp neon accents of cyan and white against a deep navy background. The style is hyper-detailed, focused on a cinematic academic intensity suitable for a high-performance leaderboard." src="https://lh3.googleusercontent.com/aida-public/AB6AXuB25D5ByCM9B1eDNG0U7W0fMbNKeJnijMJ2ivHqMIu3EA_n1DrEDbgRgV8CClMxFheINdBCIcBXGEShRUKAH_cN4fjVpFT6udS5Bs-A_NIgNOzL0Ev0mGBWm_sRLsPf_t1viYgKKaJJEwpr8a95BDU6IoOw9_klFRhdB42l0B4pf-bxjcPNllYHdz2CbfAdWx-hNDaRNLMgtSaEntMSaKv3JYAV5F4j9A0G0tw6uO1pWcRb_aglqzBbCmrq6pxI5TmvOZzzYQsHsY0m"/>
+</div>
+<span class="font-body-md text-body-md font-semibold">Vertex_Zero</span>
+</div>
+</td>
+<td class="px-lg py-md font-code text-code">14,202</td>
+<td class="px-lg py-md"><span class="px-sm py-[2px] bg-primary/10 text-primary text-[10px] uppercase font-bold rounded">Active</span></td>
+</tr>
+<tr class="hover:bg-surface-container-high transition-colors bg-surface-container-low/30">
+<td class="px-lg py-md">
+<span class="w-8 h-8 rounded-lg bg-surface-container-highest text-on-surface-variant flex items-center justify-center font-bold text-xs">#02</span>
+</td>
+<td class="px-lg py-md">
+<div class="flex items-center gap-sm">
+<div class="w-8 h-8 rounded-full bg-outline-variant overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="A portrait of a top-tier scholar athlete, wearing advanced analytical glasses reflecting complex mathematical formulas. The atmosphere is dark and scholarly, with cold, high-contrast studio lighting. The color palette consists of slate blues, sharp whites, and deep blacks, evoking professional focus and elite skill." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDDGrb23Ni1DJP2lAaZr1F422on8Oj5gS32_P9NMWa5KiopQEXETg5x9RqAV7n11z36SYcg4EGh26uo4_TbepRdPtw9c1hb80v7zX4MDAUBAVJUkSNAttqygLZZXlrKKGVoBK59IbLoIsAlFEwrieojC2St4MpkW4s9kzZapME7dvKg8GB_6NjGqKFCXw5EY3VtgRLsoQ7UE7Uj3wOVSvxGquQFli6qJTCqfLFhcfTCLV4QoUMEDsJgODbjurbqhTqEPhT_tZu8mFBi"/>
+</div>
+<span class="font-body-md text-body-md font-semibold">PrimeVector</span>
+</div>
+</td>
+<td class="px-lg py-md font-code text-code">13,850</td>
+<td class="px-lg py-md"><span class="px-sm py-[2px] bg-primary/10 text-primary text-[10px] uppercase font-bold rounded">Active</span></td>
+</tr>
+<tr class="hover:bg-surface-container-high transition-colors">
+<td class="px-lg py-md">
+<span class="w-8 h-8 rounded-lg bg-surface-container-highest text-on-surface-variant flex items-center justify-center font-bold text-xs">#03</span>
+</td>
+<td class="px-lg py-md">
+<div class="flex items-center gap-sm">
+<div class="w-8 h-8 rounded-full bg-outline-variant overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="A creative avatar representing a high-IQ competitor, featuring a stylized brain pattern in glowing circuitry lines. The art style is minimalist and corporate-modern, set against a matte black canvas with electric blue and silver highlights, representing technical brilliance and algorithmic speed." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBNeQiOT4YeDMH6Lv7M41SVJsE5TD0Gbuq_eBQ_XTCCJwl_ZeVdhEmCgc9xQ9tcnDMWjQ2bwd1MAXERRrGq45Zp7Zgv9u3CVog2Iqowibj64xieW85-7HuYOdYca2CRxQs7dp9aDL08_2y_CP6dZNfQwUe2cIypoZlIFBxJgUUDc0OGHi9Dmb7XAMwQS2Dz98NoychfYdxaln_PaqS-ifR1oaKpWvpMQJW0rfUGBpX6o7_XvyOYnpPs5zENW-oxUEoi1KStGxpAlXgi"/>
+</div>
+<span class="font-body-md text-body-md font-semibold">Theta_Wave</span>
+</div>
+</td>
+<td class="px-lg py-md font-code text-code">12,410</td>
+<td class="px-lg py-md"><span class="px-sm py-[2px] bg-surface-variant text-on-surface-variant text-[10px] uppercase font-bold rounded">Away</span></td>
+</tr>
+<tr class="hover:bg-surface-container-high transition-colors bg-surface-container-low/30 border-primary border-l-2">
+<td class="px-lg py-md">
+<span class="w-8 h-8 rounded-lg bg-primary text-on-primary flex items-center justify-center font-bold text-xs">#42</span>
+</td>
+<td class="px-lg py-md">
+<div class="flex items-center gap-sm">
+<div class="w-8 h-8 rounded-full bg-outline-variant overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="A professional headshot of a young student-athlete in a minimalist setting, featuring cool blue ambient lighting and a clean, high-performance academic aesthetic. The style is sharp, modern, and focused, utilizing a deep navy and slate color palette to match a professional esports analyst vibe." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCaEUTqEee6MPkPoduiWLCJOUJn2grrCp8NnM_gphh649NFhkTWpcf1SH-mnlYYKIzEsG2r69ccIejKsVJ_3VnZajC-h_tYURTzxq9AgB4gxZoOU-EGp5AFM_7rTwPqu4Yg9_UmapeG_y2C6mapQa-xZLat8khFskPYiHbDIpRi5MZbx2F3-NANDK-9akmv4kKioY6nmMgnn0nOMlo_5-QzYRWER8SIRfo2VuvLAtjv6xTf1RGakWz0nKFy4kcXFqeLwyIL1F4KOuI8"/>
+</div>
+<span class="font-body-md text-body-md font-bold text-primary">You</span>
+</div>
+</td>
+<td class="px-lg py-md font-code text-code">8,920</td>
+<td class="px-lg py-md"><span class="px-sm py-[2px] bg-primary/20 text-primary text-[10px] uppercase font-bold rounded">Climbing</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+<button class="w-full p-md text-on-surface-variant font-label-md text-label-md hover:text-primary transition-colors text-center uppercase tracking-widest text-[11px]">View Full Leaderboard</button>
+</div>
+</section>
+</main>
+<!-- BottomNavBar (Mobile Only) -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex md:hidden justify-around items-center px-4 py-2 pb-safe bg-surface-container rounded-t-xl border-t border-outline-variant shadow-lg">
+<a class="flex flex-col items-center justify-center text-on-surface-variant active:bg-surface-variant transition-transform scale-90 duration-150" href="#">
+<span class="material-symbols-outlined">fitness_center</span>
+<span class="font-label-md text-label-md">Drills</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-primary-container text-on-primary-container rounded-full px-4 py-1 active:bg-surface-variant transition-transform scale-90 duration-150" href="#">
+<span class="material-symbols-outlined">leaderboard</span>
+<span class="font-label-md text-label-md">Leaderboard</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant active:bg-surface-variant transition-transform scale-90 duration-150" href="#">
+<span class="material-symbols-outlined">insights</span>
+<span class="font-label-md text-label-md">Stats</span>
+</a>
+</nav>
+<!-- Background Decoration -->
+<div class="fixed inset-0 pointer-events-none -z-10">
+<div class="absolute top-[-10%] right-[-10%] w-[40%] h-[40%] bg-primary/5 blur-[120px] rounded-full"></div>
+<div class="absolute bottom-[-10%] left-[-10%] w-[40%] h-[40%] bg-secondary/5 blur-[120px] rounded-full"></div>
+</div>
+<script>
+        // Simple interactivity for demonstration
+        document.querySelectorAll('a, button').forEach(el => {
+            el.addEventListener('mousedown', () => {
+                el.classList.add('scale-95');
+            });
+            el.addEventListener('mouseup', () => {
+                el.classList.remove('scale-95');
+            });
+            el.addEventListener('mouseleave', () => {
+                el.classList.remove('scale-95');
+            });
+        });
+    </script>
+</body></html>

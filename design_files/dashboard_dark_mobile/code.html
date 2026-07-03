@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, viewport-fit=cover" name="viewport"/>
+<title>MathElite | Performance Dashboard</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        :root {
+            --surface: #101415;
+            --primary: #8ed5ff;
+        }
+        body {
+            background-color: var(--surface);
+            font-family: 'Inter', sans-serif;
+            -webkit-font-smoothing: antialiased;
+            color: #e0e3e5;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .stats-gradient {
+            background: linear-gradient(180deg, rgba(56, 189, 248, 0.1) 0%, rgba(16, 20, 21, 0) 100%);
+        }
+        .glass-card {
+            background: rgba(29, 32, 34, 0.6);
+            backdrop-filter: blur(12px);
+            border: 1px solid #3e484f;
+        }
+        /* Hide scrollbars but allow scrolling */
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "tertiary-fixed-dim": "#bec6e0",
+                      "on-error-container": "#ffdad6",
+                      "surface-container-highest": "#323537",
+                      "error-container": "#93000a",
+                      "surface-tint": "#7bd0ff",
+                      "surface-variant": "#323537",
+                      "error": "#ffb4ab",
+                      "on-tertiary-fixed-variant": "#3f465c",
+                      "on-primary": "#00354a",
+                      "tertiary-container": "#a9b1ca",
+                      "on-secondary-fixed": "#0b1c30",
+                      "on-primary-fixed": "#001e2c",
+                      "tertiary": "#c5cce6",
+                      "on-secondary-fixed-variant": "#38485d",
+                      "on-surface": "#e0e3e5",
+                      "on-tertiary": "#283044",
+                      "surface-bright": "#363a3b",
+                      "inverse-on-surface": "#2d3133",
+                      "surface-container-lowest": "#0b0f10",
+                      "outline": "#87929a",
+                      "primary-fixed": "#c4e7ff",
+                      "outline-variant": "#3e484f",
+                      "on-error": "#690005",
+                      "secondary": "#b7c8e1",
+                      "surface": "#101415",
+                      "on-tertiary-fixed": "#131b2e",
+                      "on-tertiary-container": "#3c4459",
+                      "on-primary-fixed-variant": "#004c69",
+                      "surface-dim": "#101415",
+                      "inverse-surface": "#e0e3e5",
+                      "background": "#101415",
+                      "primary-container": "#38bdf8",
+                      "on-secondary": "#213145",
+                      "secondary-fixed": "#d3e4fe",
+                      "tertiary-fixed": "#dae2fd",
+                      "on-surface-variant": "#bdc8d1",
+                      "surface-container-low": "#191c1e",
+                      "on-secondary-container": "#a9bad3",
+                      "on-primary-container": "#004965",
+                      "inverse-primary": "#00668a",
+                      "on-background": "#e0e3e5",
+                      "surface-container": "#1d2022",
+                      "primary": "#8ed5ff",
+                      "secondary-container": "#3a4a5f",
+                      "surface-container-high": "#272a2c",
+                      "primary-fixed-dim": "#7bd0ff",
+                      "secondary-fixed-dim": "#b7c8e1"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.125rem",
+                      "lg": "0.25rem",
+                      "xl": "0.5rem",
+                      "full": "0.75rem"
+              },
+              "spacing": {
+                      "md": "16px",
+                      "margin-desktop": "64px",
+                      "lg": "24px",
+                      "margin-mobile": "16px",
+                      "base": "4px",
+                      "sm": "8px",
+                      "xs": "4px",
+                      "gutter": "20px",
+                      "xl": "40px"
+              },
+              "fontFamily": {
+                      "headline-xl": ["Inter"],
+                      "body-md": ["Inter"],
+                      "label-md": ["Inter"],
+                      "headline-md": ["Inter"],
+                      "headline-lg-mobile": ["Inter"],
+                      "body-lg": ["Inter"],
+                      "code": ["Inter"],
+                      "headline-lg": ["Inter"]
+              },
+              "fontSize": {
+                      "headline-xl": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                      "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                      "label-md": ["14px", {"lineHeight": "20px", "letterSpacing": "0.05em", "fontWeight": "500"}],
+                      "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                      "headline-lg-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                      "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                      "code": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                      "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600"}]
+              }
+            },
+          },
+        }
+      </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-background selection:bg-primary-container selection:text-on-primary-container">
+<!-- Top Navigation Bar -->
+<header class="fixed top-0 left-0 w-full z-50 bg-surface dark:bg-surface-dim border-b border-outline-variant dark:border-outline-variant h-16 flex items-center justify-between px-margin-mobile md:px-margin-desktop">
+<div class="flex items-center gap-sm">
+<span class="font-headline-md text-headline-md font-bold text-primary dark:text-primary-fixed">MathElite</span>
+</div>
+<div class="hidden md:flex items-center gap-lg">
+<nav class="flex items-center gap-lg">
+<a class="font-body-md text-body-md text-primary dark:text-primary-fixed border-b-2 border-primary dark:border-primary-fixed pb-1 hover:text-primary transition-colors" href="#">Drills</a>
+<a class="font-body-md text-body-md text-on-surface-variant dark:text-on-surface-variant hover:text-primary transition-colors" href="#">Leaderboard</a>
+<a class="font-body-md text-body-md text-on-surface-variant dark:text-on-surface-variant hover:text-primary transition-colors" href="#">Stats</a>
+</nav>
+<button class="material-symbols-outlined text-primary scale-95 active:duration-100">dark_mode</button>
+</div>
+<div class="flex md:hidden items-center gap-md">
+<div class="w-8 h-8 rounded-full bg-secondary-container flex items-center justify-center overflow-hidden border border-outline-variant">
+<img class="w-full h-full object-cover" data-alt="A professional headshot of a young student athlete with a focused expression, wearing a sleek navy blue team jersey. The background is a blurred academic setting with high-tech gaming monitors. The lighting is dramatic and cool-toned, emphasizing the scholarly elite performance aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBKxshEDuLyTVCXGIUy025__g8U44MAB5FFUa4Lj2mPgZO5KqbGIEE-0LK1-vgwJW1NKs_O5FlZfBgWHlYQuieZDUOPNHIjFLNDLdOEYKc9EaWrKLaF8bGk9d0wTNFN64piV8Zr8CWDSwcLJk-fAJZaRIPgn4bhZjwBebXArjVJCUB4h1MzTNLP4_CrNXjyg_PQI3UCi5Aq0mL0dsHgUYDUx6fjcJZfnknSzJzBGJeJxDgKua3OTM4CwwAYWURO_IkKmE_ocQrtsnuh"/>
+</div>
+</div>
+</header>
+<main class="pt-20 pb-24 px-margin-mobile max-w-md mx-auto">
+<!-- Welcome Section -->
+<section class="mb-lg">
+<span class="font-label-md text-label-md text-primary uppercase tracking-widest block mb-xs">Elite Performance</span>
+<h1 class="font-headline-lg-mobile text-headline-lg-mobile text-on-surface font-black">Welcome back, Alex.</h1>
+<p class="font-body-md text-body-md text-on-surface-variant mt-1">You're in the top 2% of logic drills today.</p>
+</section>
+<!-- Daily Goal Progress -->
+<section class="mb-lg">
+<div class="bg-surface-container border border-outline-variant rounded-xl p-md relative overflow-hidden">
+<div class="relative z-10">
+<div class="flex justify-between items-end mb-sm">
+<div>
+<h3 class="font-label-md text-label-md text-on-surface-variant uppercase">Daily Routine</h3>
+<div class="font-headline-md text-headline-md font-bold text-on-surface">14/20 Drills</div>
+</div>
+<div class="text-right">
+<span class="font-label-md text-label-md text-primary">70%</span>
+</div>
+</div>
+<div class="w-full bg-surface-container-highest h-2 rounded-full overflow-hidden">
+<div class="bg-primary h-full rounded-full w-[70%] shadow-[0_0_12px_rgba(142,213,255,0.4)]"></div>
+</div>
+</div>
+<div class="absolute -right-4 -bottom-4 opacity-10">
+<span class="material-symbols-outlined text-[80px]" style="font-variation-settings: 'FILL' 1;">fitness_center</span>
+</div>
+</div>
+</section>
+<!-- Stats Section (24h Performance) -->
+<section class="mb-lg">
+<div class="flex items-center justify-between mb-sm">
+<h2 class="font-label-md text-label-md text-on-surface font-bold uppercase tracking-tight">24h Performance</h2>
+<span class="text-xs text-on-surface-variant">Live Data</span>
+</div>
+<div class="grid grid-cols-2 gap-sm">
+<div class="bg-surface-container-low border border-outline-variant rounded-lg p-md">
+<span class="material-symbols-outlined text-primary mb-xs" style="font-variation-settings: 'FILL' 1;">bolt</span>
+<div class="text-on-surface-variant font-label-md text-label-md">Avg. Speed</div>
+<div class="text-on-surface font-headline-md text-headline-md font-bold">1.2s</div>
+<div class="text-[10px] text-tertiary mt-1 flex items-center gap-1">
+<span class="material-symbols-outlined text-[12px]">trending_up</span> 8% vs yesterday
+                    </div>
+</div>
+<div class="bg-surface-container-low border border-outline-variant rounded-lg p-md">
+<span class="material-symbols-outlined text-tertiary mb-xs" style="font-variation-settings: 'FILL' 1;">target</span>
+<div class="text-on-surface-variant font-label-md text-label-md">Accuracy</div>
+<div class="text-on-surface font-headline-md text-headline-md font-bold">98.4%</div>
+<div class="text-[10px] text-primary mt-1 flex items-center gap-1">
+<span class="material-symbols-outlined text-[12px]">check_circle</span> Peak Precision
+                    </div>
+</div>
+</div>
+</section>
+<!-- Categorized Focus Cards (Bento Style) -->
+<section class="mb-lg">
+<h2 class="font-label-md text-label-md text-on-surface font-bold uppercase tracking-tight mb-sm">Training Focus</h2>
+<div class="grid grid-cols-6 grid-rows-2 gap-sm h-[320px]">
+<!-- Logic -->
+<div class="col-span-4 row-span-1 bg-secondary-container/20 border border-outline-variant rounded-xl p-md flex flex-col justify-between group active:scale-[0.98] transition-transform">
+<div class="flex justify-between items-start">
+<span class="material-symbols-outlined text-secondary" style="font-variation-settings: 'FILL' 1;">psychology</span>
+<span class="text-[10px] font-bold bg-secondary-container text-on-secondary-container px-2 py-0.5 rounded-full">CORE</span>
+</div>
+<div>
+<div class="font-label-md text-label-md text-on-surface font-bold">Logic Drills</div>
+<div class="text-xs text-on-surface-variant">Conditional logic focus</div>
+</div>
+</div>
+<!-- Geometry -->
+<div class="col-span-2 row-span-2 relative overflow-hidden border border-outline-variant rounded-xl group active:scale-[0.98] transition-transform">
+<img class="absolute inset-0 w-full h-full object-cover brightness-50 group-hover:scale-110 transition-transform duration-700" data-alt="A macro shot of architectural wireframe patterns with complex geometric shapes and blueprints. The style is technical and academic, using a deep navy and electric blue color palette. Soft glowing lines trace out mathematical formulas in a dark, high-contrast digital space." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDuvv51NCCmHw4QA2nKJViWsmtEr9qzM4CrTXU108RXrDuNuty7amIB55MaHXSakU8IabNUN1j6tah0ofuyQKO1VQI1n-lN9HrLlhG9thhoKUqVu1CaQvmvwW3cc0qbGBkPGeMdyJpA4mWvlgtvZ7wtzK5K8b-vOK0EVaOj9Eav7N1lnumrsqR-sWIUYGdxuDdxnPlwtsRZvmZOuxwvA8GYw_s5XL8QhqbQKVoLAvN_NqgM3GYmZZEF_FwnOjBYpROAfnD7DDUTmFRW"/>
+<div class="absolute inset-0 bg-gradient-to-t from-surface to-transparent p-md flex flex-col justify-end">
+<div class="font-label-md text-label-md text-on-surface font-bold">Space</div>
+<div class="text-[10px] text-on-surface-variant">Geometry</div>
+</div>
+</div>
+<!-- Calculus -->
+<div class="col-span-4 row-span-1 bg-surface-container-high border border-outline-variant rounded-xl p-md flex items-center gap-md group active:scale-[0.98] transition-transform">
+<div class="w-10 h-10 rounded-lg bg-surface-container-highest flex items-center justify-center border border-outline-variant">
+<span class="material-symbols-outlined text-primary">functions</span>
+</div>
+<div class="flex-1">
+<div class="font-label-md text-label-md text-on-surface font-bold">Calculus II</div>
+<div class="w-full bg-surface-container-highest h-1 rounded-full mt-1">
+<div class="bg-tertiary h-full w-1/3"></div>
+</div>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant">chevron_right</span>
+</div>
+</div>
+</section>
+<!-- Rank Stats & Leaderboard Preview -->
+<section>
+<div class="bg-surface-container border border-outline-variant rounded-xl overflow-hidden">
+<div class="p-md border-b border-outline-variant flex justify-between items-center bg-surface-container-low">
+<div class="flex items-center gap-sm">
+<div class="w-2 h-2 rounded-full bg-primary animate-pulse"></div>
+<span class="font-label-md text-label-md font-bold uppercase">Grandmaster Rank</span>
+</div>
+<span class="text-xs font-code text-on-surface-variant">Tier: S-01</span>
+</div>
+<div class="p-md space-y-md">
+<div class="flex items-center gap-md">
+<div class="font-headline-md text-headline-md font-black text-on-surface italic">#12</div>
+<div class="flex-1">
+<div class="text-xs text-on-surface-variant uppercase font-bold tracking-widest">Global Standing</div>
+<div class="text-sm text-on-surface">+4 Positions since 08:00</div>
+</div>
+<div class="w-12 h-12">
+<svg class="w-full h-full rotate-[-90deg]" viewbox="0 0 36 36">
+<path class="stroke-surface-container-highest" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke-width="3"></path>
+<path class="stroke-primary" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke-dasharray="85, 100" stroke-width="3"></path>
+</svg>
+</div>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- Bottom Navigation Bar (Mobile Only) -->
+<footer class="fixed bottom-0 left-0 w-full z-50 flex md:hidden justify-around items-center px-4 py-2 pb-safe bg-surface-container dark:bg-surface-container-highest border-t border-outline-variant shadow-lg rounded-t-xl">
+<a class="flex flex-col items-center justify-center bg-primary-container dark:bg-primary-fixed text-on-primary-container dark:text-on-primary-fixed rounded-full px-4 py-1 scale-90 duration-150" href="#">
+<span class="material-symbols-outlined" data-icon="fitness_center">fitness_center</span>
+<span class="font-label-md text-label-md">Drills</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-on-surface-variant active:bg-surface-variant transition-all scale-90" href="#">
+<span class="material-symbols-outlined" data-icon="leaderboard">leaderboard</span>
+<span class="font-label-md text-label-md">Leaderboard</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-on-surface-variant active:bg-surface-variant transition-all scale-90" href="#">
+<span class="material-symbols-outlined" data-icon="insights">insights</span>
+<span class="font-label-md text-label-md">Stats</span>
+</a>
+</footer>
+<!-- Side Navigation Bar (Hidden on Mobile, Visible on Desktop Layout) -->
+<aside class="hidden md:flex fixed left-0 top-16 flex-col h-[calc(100vh-64px)] w-64 bg-surface-container dark:bg-surface-container-low border-r border-outline-variant p-md">
+<div class="mb-xl px-sm">
+<div class="flex items-center gap-md mb-md">
+<div class="w-12 h-12 rounded-full overflow-hidden border-2 border-primary">
+<img class="w-full h-full object-cover" data-alt="A professional headshot of a young student athlete with a focused expression, wearing a sleek navy blue team jersey. The background is a blurred academic setting with high-tech gaming monitors. The lighting is dramatic and cool-toned, emphasizing the scholarly elite performance aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCZ8fw8JwoKI_IUoSCUnKua7T70EcgBcaoKQ4z90z7guUz7aNJAMMzErhGRGtqE0fk5KG46z__ez8Onak2aS8lnzTJQeqNhbV_CF5ixPhRCVaHglsP0HclABJrZ_yMsc73aZzpsH-pgs0ct-BGqliqdBpXJOF4Lbc9bFfKd8YlTV1Y3VcrHx8oT2xpwRtUIkHYrsy4F8a1En4MFDlU2gddNaUlu37QbftiMBQXXCFKgGaKzx-MM9ItOyQ3FwvASACkZDzsVDFO86Bws"/>
+</div>
+<div>
+<div class="font-label-md text-label-md font-bold text-on-surface">Student Athlete</div>
+<div class="text-xs text-primary font-bold">Rank: Grandmaster</div>
+</div>
+</div>
+</div>
+<nav class="flex-1 space-y-base">
+<a class="flex items-center gap-md p-md rounded-lg text-on-surface-variant dark:text-on-surface-variant hover:bg-surface-container-high transition-all" href="#">
+<span class="material-symbols-outlined">person</span>
+<span class="font-label-md text-label-md">Profile</span>
+</a>
+<a class="flex items-center gap-md p-md rounded-lg bg-secondary-container dark:bg-secondary-container text-on-secondary-container dark:text-on-secondary-container transition-all" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">settings</span>
+<span class="font-label-md text-label-md">Settings</span>
+</a>
+</nav>
+<div class="pt-md border-t border-outline-variant">
+<button class="w-full py-sm rounded-lg bg-surface-container-highest text-on-surface-variant font-label-md text-label-md flex items-center justify-center gap-sm">
+<span class="material-symbols-outlined text-[20px]">logout</span> Sign Out
+            </button>
+</div>
+</aside>
+<script>
+        // Micro-interaction for cards
+        document.querySelectorAll('.active\\:scale-\\[0\\.98\\]').forEach(card => {
+            card.addEventListener('mousedown', () => {
+                card.style.transform = 'scale(0.98)';
+            });
+            card.addEventListener('mouseup', () => {
+                card.style.transform = 'scale(1)';
+            });
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = 'scale(1)';
+            });
+        });
+    </script>
+</body></html>

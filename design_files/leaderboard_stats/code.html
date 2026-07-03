@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>MATHCRISP - Performance Analytics</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "tertiary-fixed": "#91f8b8",
+                        "surface-variant": "#e3e2e6",
+                        "surface-bright": "#faf9fd",
+                        "on-tertiary-container": "#4bb278",
+                        "secondary": "#545f72",
+                        "error": "#ba1a1a",
+                        "on-secondary-container": "#586377",
+                        "outline-variant": "#c4c6cf",
+                        "surface-tint": "#455f88",
+                        "inverse-primary": "#adc7f7",
+                        "secondary-fixed-dim": "#bcc7dd",
+                        "background": "#faf9fd",
+                        "on-primary-fixed": "#001b3c",
+                        "on-primary-fixed-variant": "#2d476f",
+                        "on-error-container": "#93000a",
+                        "on-tertiary-fixed": "#002110",
+                        "surface": "#faf9fd",
+                        "on-error": "#ffffff",
+                        "on-tertiary": "#ffffff",
+                        "tertiary-container": "#003f23",
+                        "on-surface": "#1a1c1e",
+                        "inverse-on-surface": "#f1f0f4",
+                        "on-secondary-fixed-variant": "#3c475a",
+                        "tertiary": "#002713",
+                        "on-primary-container": "#86a0cd",
+                        "outline": "#74777f",
+                        "on-tertiary-fixed-variant": "#00522f",
+                        "on-secondary": "#ffffff",
+                        "primary-fixed": "#d6e3ff",
+                        "inverse-surface": "#2f3033",
+                        "on-primary": "#ffffff",
+                        "surface-container-highest": "#e3e2e6",
+                        "on-background": "#1a1c1e",
+                        "primary": "#002045",
+                        "primary-fixed-dim": "#adc7f7",
+                        "secondary-container": "#d5e0f7",
+                        "on-surface-variant": "#43474e",
+                        "tertiary-fixed-dim": "#74db9d",
+                        "on-secondary-fixed": "#111c2c",
+                        "surface-container": "#efedf1",
+                        "surface-container-lowest": "#ffffff",
+                        "primary-container": "#1a365d",
+                        "surface-container-low": "#f4f3f7",
+                        "secondary-fixed": "#d8e3fa",
+                        "error-container": "#ffdad6",
+                        "surface-dim": "#dad9dd",
+                        "surface-container-high": "#e9e7eb"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "transition-fast": "150ms cubic-bezier(0.4, 0, 0.2, 1)",
+                        "unit": "4px",
+                        "focus-width": "640px",
+                        "gutter": "24px",
+                        "margin-desktop": "48px",
+                        "margin-mobile": "16px",
+                        "transition-instant": "50ms linear"
+                    },
+                    "fontFamily": {
+                        "headline-lg": ["Inter"],
+                        "label-caps": ["Inter"],
+                        "math-display-md": ["Inter"],
+                        "headline-md": ["Inter"],
+                        "math-display-lg": ["Inter"],
+                        "math-display-mobile": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "body-md": ["Inter"]
+                    },
+                    "fontSize": {
+                        "headline-lg": ["32px", {"lineHeight": "40px", "fontWeight": "600"}],
+                        "label-caps": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "700"}],
+                        "math-display-md": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                        "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                        "math-display-lg": ["72px", {"lineHeight": "80px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "math-display-mobile": ["40px", {"lineHeight": "48px", "fontWeight": "700"}],
+                        "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                        "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #e3e2e6; border-radius: 10px; }
+        .chart-bar { transition: height 0.6s cubic-bezier(0.4, 0, 0.2, 1); }
+        .snap-row:hover { background-color: #efedf1; }
+    </style>
+</head>
+<body class="bg-background text-on-background font-body-md min-h-screen">
+<!-- TopAppBar -->
+<header class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-gutter h-16 max-w-[1440px] mx-auto bg-surface-container-lowest border-b border-outline-variant">
+<div class="flex items-center gap-4">
+<span class="font-headline-md text-headline-md font-bold text-primary">MATHCRISP</span>
+</div>
+<div class="flex items-center gap-6">
+<div class="hidden md:flex gap-8">
+<button class="font-label-caps text-label-caps text-secondary hover:bg-surface-container transition-fast px-2 py-1">DRILLS</button>
+<button class="font-label-caps text-label-caps text-primary font-bold border-b-2 border-primary px-2 py-1">LEADERBOARD</button>
+<button class="font-label-caps text-label-caps text-secondary hover:bg-surface-container transition-fast px-2 py-1">STATS</button>
+</div>
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-on-surface-variant cursor-pointer hover:bg-surface-container p-2 rounded-full transition-fast">settings</span>
+<span class="material-symbols-outlined text-on-surface-variant cursor-pointer hover:bg-surface-container p-2 rounded-full transition-fast">help</span>
+<div class="w-8 h-8 rounded-full bg-primary-container overflow-hidden border border-outline-variant relative">
+<img class="w-full h-full object-cover" data-alt="A professional and clean studio headshot of a user for a profile avatar. The person has a neutral, focused expression. The background is a solid, light grey, maintaining a high-performance academic professional aesthetic. Lighting is soft and even, highlighting the features clearly for a modern UI profile circle." src="https://lh3.googleusercontent.com/aida-public/AB6AXuArVd_JnTpMHof3hhkCN7xsgAFLw6qWLPA4Z5fXll1g97OqxXQlrH9oA9Nqe6TsI-K_4UPjDxMl0sD-TDGD3tq0YywWin3Zu9f3WKWln4C_ORTCs2qmiV-G-_WWW04eO3th19W2KmgB5gXKaxXS4Q4UppETgv703x0Qe7SqU2muVCBmd3_8DGwds5DqPQ6bhMYvJvXx3njVtG7_KqYlgDipgMe3_HPJ2ayC7eJUravnDr0vyMrEk-_7kibmOSWIVibLp1xuqQaq2svO"/>
+</div>
+</div>
+</div>
+</header>
+<!-- SideNavBar (Desktop Only) -->
+<aside class="hidden lg:flex flex-col h-full fixed left-0 top-0 py-gutter pt-20 w-64 bg-surface-container-low border-r border-outline-variant">
+<div class="px-6 mb-8">
+<div class="p-4 bg-surface-container-highest border border-outline-variant">
+<p class="font-label-caps text-label-caps text-secondary mb-1">CURRENT RANK</p>
+<p class="font-headline-md text-headline-md text-primary font-bold">Grandmaster</p>
+<p class="font-body-md text-body-md text-on-surface-variant mt-1">Level 42 • 12.4k XP</p>
+</div>
+</div>
+<nav class="flex-1 space-y-1 px-3">
+<a class="flex items-center gap-4 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high transition-fast group" href="#">
+<span class="material-symbols-outlined group-hover:text-primary">calculate</span>
+<span class="font-label-caps text-label-caps">Drills</span>
+</a>
+<a class="flex items-center gap-4 px-4 py-3 bg-primary-container text-on-primary-container font-bold border-l-4 border-primary group" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">leaderboard</span>
+<span class="font-label-caps text-label-caps">Leaderboard</span>
+</a>
+<a class="flex items-center gap-4 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high transition-fast group" href="#">
+<span class="material-symbols-outlined group-hover:text-primary">military_tech</span>
+<span class="font-label-caps text-label-caps">Badges</span>
+</a>
+<a class="flex items-center gap-4 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high transition-fast group" href="#">
+<span class="material-symbols-outlined group-hover:text-primary">analytics</span>
+<span class="font-label-caps text-label-caps">Stats</span>
+</a>
+<a class="flex items-center gap-4 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high transition-fast group" href="#">
+<span class="material-symbols-outlined group-hover:text-primary">person</span>
+<span class="font-label-caps text-label-caps">Profile</span>
+</a>
+</nav>
+<div class="px-3 pt-6 border-t border-outline-variant space-y-1">
+<button class="w-full flex items-center gap-4 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high transition-fast">
+<span class="material-symbols-outlined">settings</span>
+<span class="font-label-caps text-label-caps">Settings</span>
+</button>
+<button class="w-full flex items-center gap-4 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high transition-fast">
+<span class="material-symbols-outlined text-error">logout</span>
+<span class="font-label-caps text-label-caps text-error">Sign Out</span>
+</button>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="pt-20 pb-20 lg:pb-8 lg:pl-64 min-h-screen">
+<div class="max-w-[1200px] mx-auto px-margin-mobile md:px-margin-desktop py-6">
+<!-- Filters & Header Section -->
+<div class="flex flex-col md:flex-row md:items-end justify-between mb-8 gap-4">
+<div>
+<h1 class="font-headline-lg text-headline-lg text-primary mb-2">Global Performance</h1>
+<p class="text-secondary body-md">Live competition data and your personal growth trajectory.</p>
+</div>
+<div class="flex gap-2 bg-surface-container-low p-1 border border-outline-variant">
+<button class="px-4 py-2 font-label-caps text-label-caps bg-primary text-white">ALL MODES</button>
+<button class="px-4 py-2 font-label-caps text-label-caps text-secondary hover:bg-surface-container-highest transition-fast">ALGEBRA</button>
+<button class="px-4 py-2 font-label-caps text-label-caps text-secondary hover:bg-surface-container-highest transition-fast">CALCULUS</button>
+<button class="px-4 py-2 font-label-caps text-label-caps text-secondary hover:bg-surface-container-highest transition-fast">ARITHMETIC</button>
+</div>
+</div>
+<!-- Bento Layout Content -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter">
+<!-- Left Column: Global Leaderboard (7 Cols) -->
+<div class="lg:col-span-7 flex flex-col gap-gutter">
+<div class="bg-surface-container-lowest border border-outline-variant p-0 flex-1 overflow-hidden">
+<div class="p-6 border-b border-outline-variant flex justify-between items-center bg-surface-container-low">
+<span class="font-label-caps text-label-caps text-primary flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]">public</span>
+                                GLOBAL LEADERBOARD
+                            </span>
+<span class="font-label-caps text-label-caps text-secondary">UPDATED 2M AGO</span>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left">
+<thead class="bg-surface-container border-b border-outline-variant">
+<tr>
+<th class="px-6 py-3 font-label-caps text-label-caps text-secondary">Rank</th>
+<th class="px-6 py-3 font-label-caps text-label-caps text-secondary">Player</th>
+<th class="px-6 py-3 font-label-caps text-label-caps text-secondary">Category</th>
+<th class="px-6 py-3 font-label-caps text-label-caps text-secondary text-right">Avg Time</th>
+<th class="px-6 py-3 font-label-caps text-label-caps text-secondary text-right">Score</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant">
+<tr class="snap-row transition-all duration-150">
+<td class="px-6 py-4 font-bold text-primary">01</td>
+<td class="px-6 py-4 flex items-center gap-3">
+<div class="w-6 h-6 rounded-full bg-tertiary-fixed flex items-center justify-center">
+<span class="material-symbols-outlined text-[14px] text-on-tertiary-fixed">military_tech</span>
+</div>
+<span class="font-bold">LogicMaster99</span>
+</td>
+<td class="px-6 py-4"><span class="px-2 py-1 bg-surface-container-high text-on-surface-variant text-[10px] font-bold tracking-wider rounded-sm">CALCULUS</span></td>
+<td class="px-6 py-4 text-right font-mono text-secondary">0.84s</td>
+<td class="px-6 py-4 text-right font-bold text-primary">24,850</td>
+</tr>
+<tr class="snap-row transition-all duration-150">
+<td class="px-6 py-4 font-bold text-primary">02</td>
+<td class="px-6 py-4 flex items-center gap-3">
+<div class="w-6 h-6 rounded-full bg-outline-variant flex items-center justify-center"></div>
+<span class="font-bold">PrimeNumber7</span>
+</td>
+<td class="px-6 py-4"><span class="px-2 py-1 bg-surface-container-high text-on-surface-variant text-[10px] font-bold tracking-wider rounded-sm">ALGEBRA</span></td>
+<td class="px-6 py-4 text-right font-mono text-secondary">0.91s</td>
+<td class="px-6 py-4 text-right font-bold text-primary">23,120</td>
+</tr>
+<!-- User highlight row -->
+<tr class="bg-primary-container/10 border-l-4 border-primary transition-all duration-150">
+<td class="px-6 py-4 font-bold text-primary">42</td>
+<td class="px-6 py-4 flex items-center gap-3">
+<div class="w-6 h-6 rounded-full bg-primary flex items-center justify-center">
+<span class="material-symbols-outlined text-[14px] text-white" style="font-variation-settings: 'FILL' 1;">person</span>
+</div>
+<span class="font-bold text-primary">You (Grandmaster)</span>
+</td>
+<td class="px-6 py-4"><span class="px-2 py-1 bg-primary text-white text-[10px] font-bold tracking-wider rounded-sm">MIXED</span></td>
+<td class="px-6 py-4 text-right font-mono text-primary font-bold">1.12s</td>
+<td class="px-6 py-4 text-right font-bold text-primary">12,400</td>
+</tr>
+<tr class="snap-row transition-all duration-150">
+<td class="px-6 py-4 font-bold text-primary">43</td>
+<td class="px-6 py-4 flex items-center gap-3">
+<div class="w-6 h-6 rounded-full bg-outline-variant flex items-center justify-center"></div>
+<span class="font-bold">ThetaWave</span>
+</td>
+<td class="px-6 py-4"><span class="px-2 py-1 bg-surface-container-high text-on-surface-variant text-[10px] font-bold tracking-wider rounded-sm">ARITHMETIC</span></td>
+<td class="px-6 py-4 text-right font-mono text-secondary">1.15s</td>
+<td class="px-6 py-4 text-right font-bold text-primary">12,310</td>
+</tr>
+<tr class="snap-row transition-all duration-150">
+<td class="px-6 py-4 font-bold text-primary">44</td>
+<td class="px-6 py-4 flex items-center gap-3">
+<div class="w-6 h-6 rounded-full bg-outline-variant flex items-center justify-center"></div>
+<span class="font-bold">EulerX</span>
+</td>
+<td class="px-6 py-4"><span class="px-2 py-1 bg-surface-container-high text-on-surface-variant text-[10px] font-bold tracking-wider rounded-sm">CALCULUS</span></td>
+<td class="px-6 py-4 text-right font-mono text-secondary">1.21s</td>
+<td class="px-6 py-4 text-right font-bold text-primary">11,940</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="p-4 bg-surface-container-low border-t border-outline-variant flex justify-center">
+<button class="font-label-caps text-label-caps text-primary flex items-center gap-2 hover:underline">
+                                VIEW FULL RANKINGS <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Right Column: Stats & Performance (5 Cols) -->
+<div class="lg:col-span-5 flex flex-col gap-gutter">
+<!-- Speed Trend Card -->
+<div class="bg-surface-container-lowest border border-outline-variant p-8 relative overflow-hidden">
+<div class="absolute top-0 left-0 w-full h-1 bg-primary"></div>
+<div class="flex justify-between items-start mb-6">
+<div>
+<h3 class="font-label-caps text-label-caps text-secondary mb-1">SPEED TREND (LAST 7 DAYS)</h3>
+<p class="font-headline-md text-headline-md text-primary font-bold">1.12s Avg</p>
+</div>
+<span class="text-tertiary font-bold text-label-caps flex items-center gap-1 bg-tertiary-fixed/30 px-2 py-1">
+<span class="material-symbols-outlined text-[16px]">trending_down</span> -0.04s
+                            </span>
+</div>
+<div class="h-48 w-full flex items-end justify-between gap-2 pt-4">
+<!-- Simple Bar Chart Representation -->
+<div class="flex flex-col items-center gap-2 group cursor-help">
+<div class="w-8 bg-surface-container-highest chart-bar h-[70%]" title="1.3s"></div>
+<span class="text-[10px] font-label-caps text-secondary">MON</span>
+</div>
+<div class="flex flex-col items-center gap-2 group cursor-help">
+<div class="w-8 bg-surface-container-highest chart-bar h-[65%]" title="1.25s"></div>
+<span class="text-[10px] font-label-caps text-secondary">TUE</span>
+</div>
+<div class="flex flex-col items-center gap-2 group cursor-help">
+<div class="w-8 bg-primary chart-bar h-[60%]" title="1.2s"></div>
+<span class="text-[10px] font-label-caps text-secondary">WED</span>
+</div>
+<div class="flex flex-col items-center gap-2 group cursor-help">
+<div class="w-8 bg-surface-container-highest chart-bar h-[55%]" title="1.15s"></div>
+<span class="text-[10px] font-label-caps text-secondary">THU</span>
+</div>
+<div class="flex flex-col items-center gap-2 group cursor-help">
+<div class="w-8 bg-surface-container-highest chart-bar h-[58%]" title="1.18s"></div>
+<span class="text-[10px] font-label-caps text-secondary">FRI</span>
+</div>
+<div class="flex flex-col items-center gap-2 group cursor-help">
+<div class="w-8 bg-surface-container-highest chart-bar h-[50%]" title="1.08s"></div>
+<span class="text-[10px] font-label-caps text-secondary">SAT</span>
+</div>
+<div class="flex flex-col items-center gap-2 group cursor-help">
+<div class="w-8 bg-primary-container chart-bar h-[52%]" title="1.12s"></div>
+<span class="text-[10px] font-label-caps text-secondary">SUN</span>
+</div>
+</div>
+</div>
+<!-- Accuracy Per Category -->
+<div class="bg-surface-container-lowest border border-outline-variant p-8">
+<h3 class="font-label-caps text-label-caps text-secondary mb-6">ACCURACY PER CATEGORY</h3>
+<div class="space-y-6">
+<div>
+<div class="flex justify-between items-center mb-2">
+<span class="font-body-md font-bold">Algebra</span>
+<span class="font-mono text-primary font-bold">94%</span>
+</div>
+<div class="w-full h-2 bg-surface-container border border-outline-variant">
+<div class="h-full bg-primary" style="width: 94%;"></div>
+</div>
+</div>
+<div>
+<div class="flex justify-between items-center mb-2">
+<span class="font-body-md font-bold">Calculus</span>
+<span class="font-mono text-primary font-bold">88%</span>
+</div>
+<div class="w-full h-2 bg-surface-container border border-outline-variant">
+<div class="h-full bg-primary" style="width: 88%;"></div>
+</div>
+</div>
+<div>
+<div class="flex justify-between items-center mb-2">
+<span class="font-body-md font-bold">Arithmetic</span>
+<span class="font-mono text-primary font-bold">99%</span>
+</div>
+<div class="w-full h-2 bg-surface-container border border-outline-variant">
+<div class="h-full bg-tertiary-fixed-dim" style="width: 99%;"></div>
+</div>
+</div>
+</div>
+</div>
+<!-- Weekly Goal Widget -->
+<div class="bg-primary text-white p-8 flex flex-col justify-center items-center text-center">
+<span class="material-symbols-outlined text-4xl mb-4" style="font-variation-settings: 'FILL' 1;">stars</span>
+<h3 class="font-headline-md text-headline-md font-bold mb-2">Weekly Goal</h3>
+<p class="text-primary-fixed/80 mb-6">Complete 50 more drills to unlock the "Infinite Sum" badge.</p>
+<div class="w-full bg-primary-container/30 h-3 mb-6">
+<div class="bg-tertiary-fixed h-full" style="width: 75%;"></div>
+</div>
+<button class="w-full py-4 bg-white text-primary font-bold font-label-caps hover:bg-surface-container-highest transition-fast">RESUME TRAINING</button>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- BottomNavBar (Mobile Only) -->
+<nav class="lg:hidden fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-margin-mobile pb-safe bg-surface-container-lowest border-t border-outline-variant h-16">
+<button class="flex flex-col items-center text-on-surface-variant gap-1">
+<span class="material-symbols-outlined">calculate</span>
+<span class="text-[10px] font-label-caps">Drills</span>
+</button>
+<button class="flex flex-col items-center text-primary font-bold gap-1">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">leaderboard</span>
+<span class="text-[10px] font-label-caps">Rank</span>
+</button>
+<button class="flex flex-col items-center text-on-surface-variant gap-1">
+<span class="material-symbols-outlined">query_stats</span>
+<span class="text-[10px] font-label-caps">Stats</span>
+</button>
+<button class="flex flex-col items-center text-on-surface-variant gap-1">
+<span class="material-symbols-outlined">person</span>
+<span class="text-[10px] font-label-caps">Me</span>
+</button>
+</nav>
+<script>
+        // Micro-interactions for chart bars
+        document.querySelectorAll('.chart-bar').forEach(bar => {
+            bar.addEventListener('mouseover', function() {
+                this.classList.add('opacity-80');
+                this.classList.add('scale-x-110');
+            });
+            bar.addEventListener('mouseout', function() {
+                this.classList.remove('opacity-80');
+                this.classList.remove('scale-x-110');
+            });
+        });
+
+        // Sticky header background shift on scroll
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('header');
+            if (window.scrollY > 10) {
+                header.classList.add('shadow-sm');
+                header.classList.replace('bg-surface-container-lowest', 'bg-white');
+            } else {
+                header.classList.remove('shadow-sm');
+                header.classList.replace('bg-white', 'bg-surface-container-lowest');
+            }
+        });
+    </script>
+</body></html>

@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport"/>
+<title>MATHCRISP | Training Dashboard</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "tertiary-fixed": "#91f8b8",
+                    "surface-variant": "#e3e2e6",
+                    "surface-bright": "#faf9fd",
+                    "on-tertiary-container": "#4bb278",
+                    "secondary": "#545f72",
+                    "error": "#ba1a1a",
+                    "on-secondary-container": "#586377",
+                    "outline-variant": "#c4c6cf",
+                    "surface-tint": "#455f88",
+                    "inverse-primary": "#adc7f7",
+                    "secondary-fixed-dim": "#bcc7dd",
+                    "background": "#faf9fd",
+                    "on-primary-fixed": "#001b3c",
+                    "on-primary-fixed-variant": "#2d476f",
+                    "on-error-container": "#93000a",
+                    "on-tertiary-fixed": "#002110",
+                    "surface": "#faf9fd",
+                    "on-error": "#ffffff",
+                    "on-tertiary": "#ffffff",
+                    "tertiary-container": "#003f23",
+                    "on-surface": "#1a1c1e",
+                    "inverse-on-surface": "#f1f0f4",
+                    "on-secondary-fixed-variant": "#3c475a",
+                    "tertiary": "#002713",
+                    "on-primary-container": "#86a0cd",
+                    "outline": "#74777f",
+                    "on-tertiary-fixed-variant": "#00522f",
+                    "on-secondary": "#ffffff",
+                    "primary-fixed": "#d6e3ff",
+                    "inverse-surface": "#2f3033",
+                    "on-primary": "#ffffff",
+                    "surface-container-highest": "#e3e2e6",
+                    "on-background": "#1a1c1e",
+                    "primary": "#002045",
+                    "primary-fixed-dim": "#adc7f7",
+                    "secondary-container": "#d5e0f7",
+                    "on-surface-variant": "#43474e",
+                    "tertiary-fixed-dim": "#74db9d",
+                    "on-secondary-fixed": "#111c2c",
+                    "surface-container": "#efedf1",
+                    "surface-container-lowest": "#ffffff",
+                    "primary-container": "#1a365d",
+                    "surface-container-low": "#f4f3f7",
+                    "secondary-fixed": "#d8e3fa",
+                    "error-container": "#ffdad6",
+                    "surface-dim": "#dad9dd",
+                    "surface-container-high": "#e9e7eb"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "transition-fast": "150ms cubic-bezier(0.4, 0, 0.2, 1)",
+                    "unit": "4px",
+                    "focus-width": "640px",
+                    "gutter": "24px",
+                    "margin-desktop": "48px",
+                    "margin-mobile": "16px",
+                    "transition-instant": "50ms linear"
+            },
+            "fontFamily": {
+                    "headline-lg": ["Inter"],
+                    "label-caps": ["Inter"],
+                    "math-display-md": ["Inter"],
+                    "headline-md": ["Inter"],
+                    "math-display-lg": ["Inter"],
+                    "math-display-mobile": ["Inter"],
+                    "body-lg": ["Inter"],
+                    "body-md": ["Inter"]
+            },
+            "fontSize": {
+                    "headline-lg": ["32px", {"lineHeight": "40px", "fontWeight": "600"}],
+                    "label-caps": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "700"}],
+                    "math-display-md": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                    "math-display-lg": ["72px", {"lineHeight": "80px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "math-display-mobile": ["40px", {"lineHeight": "48px", "fontWeight": "700"}],
+                    "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body {
+            font-family: 'Inter', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .drill-card-active:active {
+            transform: scale(0.98);
+            background-color: var(--tw-surface-container-highest);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-background min-h-screen pb-20">
+<!-- Top App Bar -->
+<header class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-6 h-16 max-w-[1440px] mx-auto bg-surface-container-lowest border-b border-outline-variant">
+<h1 class="font-headline-md text-headline-md font-bold text-primary">MATHCRISP</h1>
+<div class="flex items-center gap-4">
+<button class="p-2 hover:bg-surface-container rounded-full transition-all">
+<span class="material-symbols-outlined text-secondary">help</span>
+</button>
+<button class="p-2 hover:bg-surface-container rounded-full transition-all">
+<span class="material-symbols-outlined text-secondary">settings</span>
+</button>
+</div>
+</header>
+<main class="pt-20 px-4 max-w-lg mx-auto">
+<!-- Welcome Section -->
+<section class="mb-8 flex items-center justify-between">
+<div>
+<p class="font-label-caps text-label-caps text-secondary mb-1">WELCOME BACK</p>
+<h2 class="font-headline-md text-headline-md text-on-surface">Alex Mercer</h2>
+<div class="flex items-center mt-1">
+<span class="bg-primary-container text-on-primary-container px-2 py-0.5 font-label-caps text-label-caps border border-primary">LEVEL 42</span>
+<span class="ml-3 font-body-md text-body-md text-secondary">12.4k XP</span>
+</div>
+</div>
+<div class="relative">
+<div class="w-16 h-16 border border-outline bg-surface-container-high overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="A professional, minimalist profile portrait of a modern student in a high-tech academic environment. The lighting is crisp and cold, using a professional studio setup with blue and white highlights. The style is sharp, architectural, and clean, conveying intellectual focus and professional discipline. High-performance aesthetic with a neutral background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAm6DcFUDoLpPdKTnnkiU0A4HRlcz-BoeUNOrcoYyDgl38-XYP-VbIEq1f4FBAL5X0x3ptPWE_k6xDJiq765lopwvxK2Y-aApqFjswTl1bfMirieDVRy7ixA7Wz3OSbLG-oQJ8ByAr9lAT-LPNl2PrwCyVyvXhASbIqsysWVC4ekV4OWJVKyyHWWbNxd-MkN5e47xzAwrwBbcPgcS5YbVgGKMU0IC6QKZHvgK7xyu583r7LkmNebTrz16GOff2MA_rAlQDEMHLdMkgd"/>
+</div>
+<div class="absolute -bottom-1 -right-1 w-6 h-6 bg-tertiary-fixed border border-on-tertiary-fixed flex items-center justify-center">
+<span class="material-symbols-outlined text-[14px] font-bold" style="font-variation-settings: 'FILL' 1;">military_tech</span>
+</div>
+</div>
+</section>
+<!-- Current Progress Bar -->
+<div class="mb-10">
+<div class="flex justify-between items-end mb-2">
+<span class="font-label-caps text-label-caps text-secondary">DAILY GOAL: 85%</span>
+<span class="font-body-md text-body-md font-bold text-primary">17/20 Drills</span>
+</div>
+<div class="h-2 w-full bg-surface-container-highest border border-outline-variant">
+<div class="h-full bg-tertiary-container w-[85%] transition-all duration-500"></div>
+</div>
+</div>
+<!-- Drill Categories - Large Tap Targets -->
+<section class="space-y-4">
+<h3 class="font-label-caps text-label-caps text-secondary mb-4">CHOOSE YOUR FOCUS</h3>
+<!-- Bento-style Grid for Drills -->
+<div class="grid grid-cols-1 gap-4">
+<!-- Primary Action Card -->
+<button class="drill-card-active w-full bg-primary p-6 flex items-center justify-between border border-primary transition-fast">
+<div class="text-left">
+<span class="font-label-caps text-label-caps text-primary-fixed mb-1 block">RECOMMENDED</span>
+<h4 class="font-headline-md text-headline-md text-white">Mental Arithmetic</h4>
+<p class="font-body-md text-body-md text-primary-fixed-dim opacity-80 mt-1">Mixed operations • 2m sprint</p>
+</div>
+<span class="material-symbols-outlined text-white text-4xl">calculate</span>
+</button>
+<!-- Secondary Category Row -->
+<div class="grid grid-cols-2 gap-4">
+<button class="drill-card-active bg-white p-5 border border-outline-variant text-left transition-fast flex flex-col justify-between h-40">
+<span class="material-symbols-outlined text-primary text-3xl">functions</span>
+<div>
+<h4 class="font-body-lg text-body-lg font-bold text-on-surface">Algebra</h4>
+<p class="font-label-caps text-label-caps text-secondary">Level 8 unlocked</p>
+</div>
+</button>
+<button class="drill-card-active bg-white p-5 border border-outline-variant text-left transition-fast flex flex-col justify-between h-40">
+<span class="material-symbols-outlined text-primary text-3xl">square_foot</span>
+<div>
+<h4 class="font-body-lg text-body-lg font-bold text-on-surface">Geometry</h4>
+<p class="font-label-caps text-label-caps text-secondary">New Badge available</p>
+</div>
+</button>
+</div>
+<!-- Specialized Drill -->
+<button class="drill-card-active bg-surface-container-low p-6 border border-outline-variant flex items-center justify-between transition-fast">
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 bg-secondary-container flex items-center justify-center border border-outline-variant">
+<span class="material-symbols-outlined text-on-secondary-container">query_stats</span>
+</div>
+<div class="text-left">
+<h4 class="font-body-lg text-body-lg font-bold text-on-surface">Statistics &amp; Probability</h4>
+<p class="font-label-caps text-label-caps text-secondary">Strengthen your weakness</p>
+</div>
+</div>
+<span class="material-symbols-outlined text-secondary">chevron_right</span>
+</button>
+</div>
+</section>
+<!-- Quick Stats Section -->
+<section class="mt-10 mb-6">
+<h3 class="font-label-caps text-label-caps text-secondary mb-4">24H PERFORMANCE</h3>
+<div class="grid grid-cols-3 gap-1">
+<div class="bg-white border border-outline-variant p-4 text-center">
+<p class="font-label-caps text-label-caps text-secondary">ACCURACY</p>
+<p class="font-headline-md text-headline-md text-primary mt-1">98.2%</p>
+</div>
+<div class="bg-white border border-outline-variant p-4 text-center">
+<p class="font-label-caps text-label-caps text-secondary">SPEED</p>
+<p class="font-headline-md text-headline-md text-primary mt-1">1.4s</p>
+</div>
+<div class="bg-white border border-outline-variant p-4 text-center">
+<p class="font-label-caps text-label-caps text-secondary">STREAK</p>
+<p class="font-headline-md text-headline-md text-tertiary-container mt-1">14</p>
+</div>
+</div>
+</section>
+</main>
+<!-- Bottom Navigation Bar (Optimized for Mobile as per JSON style_shell_layout) -->
+<nav class="lg:hidden fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 pb-safe bg-surface-container-lowest h-16 border-t border-outline-variant">
+<!-- Item: Drills (Active based on Dashboard context) -->
+<a class="flex flex-col items-center justify-center gap-1 text-primary font-bold" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">calculate</span>
+<span class="font-label-caps text-[10px]">DRILLS</span>
+</a>
+<!-- Item: Leaderboard -->
+<a class="flex flex-col items-center justify-center gap-1 text-on-surface-variant" href="#">
+<span class="material-symbols-outlined">leaderboard</span>
+<span class="font-label-caps text-[10px]">RANK</span>
+</a>
+<!-- Item: Stats -->
+<a class="flex flex-col items-center justify-center gap-1 text-on-surface-variant" href="#">
+<span class="material-symbols-outlined">query_stats</span>
+<span class="font-label-caps text-[10px]">STATS</span>
+</a>
+<!-- Item: Profile -->
+<a class="flex flex-col items-center justify-center gap-1 text-on-surface-variant" href="#">
+<span class="material-symbols-outlined">person</span>
+<span class="font-label-caps text-[10px]">ME</span>
+</a>
+</nav>
+<!-- Floating Action Button (Optional Contextual Trigger for START DRILL) -->
+<button class="fixed bottom-20 right-6 w-14 h-14 bg-primary text-white shadow-xl flex items-center justify-center hover:scale-110 active:scale-95 transition-all z-40 border border-primary-container">
+<span class="material-symbols-outlined text-3xl">play_arrow</span>
+</button>
+<script>
+        // Simple haptic feedback simulation for drill cards
+        const buttons = document.querySelectorAll('.drill-card-active');
+        buttons.forEach(btn => {
+            btn.addEventListener('touchstart', () => {
+                if (window.navigator.vibrate) {
+                    window.navigator.vibrate(5);
+                }
+            });
+        });
+
+        // Instant navigation transitions
+        document.querySelectorAll('nav a').forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                // Simulation of active state switch
+                document.querySelectorAll('nav a').forEach(l => {
+                    l.classList.remove('text-primary', 'font-bold');
+                    l.classList.add('text-on-surface-variant');
+                    l.querySelector('span.material-symbols-outlined').style.fontVariationSettings = "'FILL' 0";
+                });
+                link.classList.add('text-primary', 'font-bold');
+                link.classList.remove('text-on-surface-variant');
+                link.querySelector('span.material-symbols-outlined').style.fontVariationSettings = "'FILL' 1";
+            });
+        });
+    </script>
+</body></html>

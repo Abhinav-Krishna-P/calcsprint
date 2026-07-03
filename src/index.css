@@ -1,0 +1,117 @@
+@import "tailwindcss";
+
+:root {
+  --color-bg: #faf9fd;
+  --color-text: #1a1c1e;
+  --color-surface: #ffffff;
+  --color-surface-container: #efedf1;
+  --color-primary: #002045;
+  --color-on-primary: #ffffff;
+  --color-secondary: #545f72;
+  --color-accent: #d97706; /* Amber / Gold for badges/scores */
+  --color-success: #10b981;
+  --color-error: #ba1a1a;
+  --color-outline: #74777f;
+  --color-outline-variant: #c4c6cf;
+  --radius-custom: 0px; /* Sharp corners in light mode */
+}
+
+.dark {
+  --color-bg: #101415;
+  --color-text: #e0e3e5;
+  --color-surface: #0f172a;
+  --color-surface-container: #1e293b;
+  --color-primary: #38bdf8; /* Sky blue */
+  --color-on-primary: #00354a;
+  --color-secondary: #b7c8e1;
+  --color-accent: #fbbf24; /* Muted amber */
+  --color-success: #34d399;
+  --color-error: #ffb4ab;
+  --color-outline: #334155;
+  --color-outline-variant: #3e484f;
+  --radius-custom: 4px; /* Soft corners in dark mode */
+}
+
+@theme {
+  --color-app-bg: var(--color-bg);
+  --color-app-text: var(--color-text);
+  --color-app-surface: var(--color-surface);
+  --color-app-surface-container: var(--color-surface-container);
+  --color-app-primary: var(--color-primary);
+  --color-app-on-primary: var(--color-on-primary);
+  --color-app-secondary: var(--color-secondary);
+  --color-app-accent: var(--color-accent);
+  --color-app-success: var(--color-success);
+  --color-app-error: var(--color-error);
+  --color-app-outline: var(--color-outline);
+  --color-app-outline-variant: var(--color-outline-variant);
+  --radius-app: var(--radius-custom);
+  
+  --font-sans: "Outfit", sans-serif;
+  --font-mono: "JetBrains Mono", monospace;
+  
+  --animate-shake: shake 0.15s ease-in-out 2;
+  
+  @keyframes shake {
+    0% { transform: translateX(0); }
+    25% { transform: translateX(6px); }
+    75% { transform: translateX(-6px); }
+    100% { transform: translateX(0); }
+  }
+}
+
+/* Custom global styles */
+body {
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  font-family: 'Outfit', sans-serif;
+  margin: 0;
+  padding: 0;
+  transition: background-color 150ms ease, color 150ms ease, border-color 150ms ease;
+}
+
+/* Tabular figures for timers, scores, etc. */
+.tabular-nums {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+}
+
+/* Block style cursor in active drill inputs */
+.block-cursor {
+  font-family: var(--font-mono);
+  caret-shape: block; /* For newer browsers support */
+}
+
+/* Custom scrollbars */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-bg);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-outline-variant);
+  border-radius: var(--radius-custom);
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-outline);
+}
+
+/* Hide defaults for input[type="number"] */
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+/* Shake keyframes */
+@keyframes shake {
+  0% { transform: translateX(0); }
+  25% { transform: translateX(6px); }
+  75% { transform: translateX(-6px); }
+  100% { transform: translateX(0); }
+}

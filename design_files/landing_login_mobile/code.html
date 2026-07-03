@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>MATHCRISP | Professional Mental Math Training</title>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "on-tertiary-fixed-variant": "#00522f",
+            "surface-tint": "#455f88",
+            "tertiary": "#002713",
+            "inverse-surface": "#2f3033",
+            "on-primary-fixed": "#001b3c",
+            "surface-container-lowest": "#ffffff",
+            "on-tertiary": "#ffffff",
+            "on-error-container": "#93000a",
+            "surface-dim": "#dad9dd",
+            "on-tertiary-fixed": "#002110",
+            "on-primary-container": "#86a0cd",
+            "secondary-container": "#d5e0f7",
+            "primary-container": "#1a365d",
+            "on-tertiary-container": "#4bb278",
+            "on-background": "#1a1c1e",
+            "inverse-on-surface": "#f1f0f4",
+            "on-secondary-fixed-variant": "#3c475a",
+            "secondary-fixed-dim": "#bcc7dd",
+            "on-primary": "#ffffff",
+            "on-secondary-container": "#586377",
+            "on-surface-variant": "#43474e",
+            "primary-fixed-dim": "#adc7f7",
+            "on-primary-fixed-variant": "#2d476f",
+            "surface-bright": "#faf9fd",
+            "secondary": "#545f72",
+            "error-container": "#ffdad6",
+            "on-secondary-fixed": "#111c2c",
+            "surface": "#faf9fd",
+            "inverse-primary": "#adc7f7",
+            "surface-container-high": "#e9e7eb",
+            "secondary-fixed": "#d8e3fa",
+            "surface-variant": "#e3e2e6",
+            "tertiary-fixed": "#91f8b8",
+            "primary-fixed": "#d6e3ff",
+            "tertiary-fixed-dim": "#74db9d",
+            "on-secondary": "#ffffff",
+            "surface-container": "#efedf1",
+            "primary": "#1a365d", // Overridden for Deep Navy precision per prompt
+            "outline": "#74777f",
+            "on-surface": "#1a1c1e",
+            "outline-variant": "#c4c6cf",
+            "tertiary-container": "#003f23",
+            "background": "#faf9fd",
+            "error": "#ba1a1a",
+            "surface-container-low": "#f4f3f7",
+            "surface-container-highest": "#e3e2e6",
+            "on-error": "#ffffff"
+          },
+          "borderRadius": {
+            "DEFAULT": "0px", // Industrial Precision: Sharp corners per style guidance
+            "lg": "0px",
+            "xl": "0px",
+            "full": "9999px"
+          },
+          "spacing": {
+            "margin-mobile": "16px",
+            "unit": "4px",
+            "gutter": "24px",
+            "margin-desktop": "48px",
+            "focus-width": "640px",
+            "transition-instant": "50ms linear",
+            "transition-fast": "150ms cubic-bezier(0.4, 0, 0.2, 1)"
+          },
+          "fontFamily": {
+            "label-caps": ["Inter", "sans-serif"],
+            "body-md": ["Inter", "sans-serif"],
+            "body-lg": ["Inter", "sans-serif"],
+            "math-display-mobile": ["Inter", "sans-serif"],
+            "headline-md": ["Inter", "sans-serif"],
+            "math-display-md": ["Inter", "sans-serif"],
+            "math-display-lg": ["Inter", "sans-serif"],
+            "headline-lg": ["Inter", "sans-serif"]
+          },
+          "fontSize": {
+            "label-caps": ["12px", { "lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "700" }],
+            "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+            "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }],
+            "math-display-mobile": ["40px", { "lineHeight": "48px", "fontWeight": "700" }],
+            "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "600" }],
+            "math-display-md": ["48px", { "lineHeight": "56px", "letterSpacing": "-0.01em", "fontWeight": "700" }],
+            "math-display-lg": ["72px", { "lineHeight": "80px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+            "headline-lg": ["32px", { "lineHeight": "40px", "fontWeight": "600" }],
+            "headline-lg-mobile": ["28px", { "lineHeight": "36px", "fontWeight": "600" }]
+          }
+        },
+      },
+    }
+  </script>
+<style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      display: inline-block;
+      vertical-align: middle;
+    }
+    body {
+      background-color: #faf9fd;
+      -webkit-font-smoothing: antialiased;
+    }
+    .focus-outline-heavy:focus-within {
+      border-color: #1a365d !important;
+      outline: none;
+    }
+    .snap-transition {
+      transition: all 150ms cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    /* Block cursor simulation for precise aesthetic */
+    .block-cursor::after {
+      content: '';
+      display: inline-block;
+      width: 8px;
+      height: 1.2em;
+      background: #1a365d;
+      vertical-align: middle;
+      margin-left: 2px;
+      animation: blink 1s step-end infinite;
+    }
+    @keyframes blink {
+      from, to { opacity: 1; }
+      50% { opacity: 0; }
+    }
+  </style>
+</head>
+<body class="font-body-md text-on-surface">
+<!-- Suppression logic: Login/Landing screen has no Shell per instructions -->
+<main class="min-h-screen flex flex-col items-center">
+<!-- Hero Image Area -->
+<div class="relative w-full h-[40vh] bg-primary overflow-hidden">
+<img alt="" class="w-full h-full object-cover opacity-80 mix-blend-overlay" src="https://lh3.googleusercontent.com/aida/AP1WRLtm0C8ICV_ViSsxv0pqYWSI4ths_JWRc4kWhyWcfJKmX7mYnkcEfzT0WGpcZtfRSoISiujL67QxR4jzR8qebE5fs0R83Gi5hdRSKO5gS5euDBwAfp40FUo5R73by9NwNcSV7BRc4XUQ1Kz38hiqvBHcWlfHNcACGoq3q1F6ScojnT3R7XWR5Q_AmjdHugGFg3S3Z-cmm1Qhe1wW7KL0Ivklt-veIHTP2bNXfkc8ubQ231wI_LwLlORPjriX"/>
+<div class="absolute inset-0 bg-gradient-to-t from-primary/90 to-transparent"></div>
+<!-- Brand Logo Over Image -->
+<div class="absolute top-8 left-0 w-full px-margin-mobile flex justify-center">
+<h1 class="font-headline-md text-headline-md font-bold tracking-tight text-white uppercase letter-spacing-widest">
+          MATHCRISP
+        </h1>
+</div>
+<!-- Hero Headline Overlay -->
+<div class="absolute bottom-6 left-0 w-full px-margin-mobile">
+<h2 class="font-headline-lg-mobile text-headline-lg-mobile text-white leading-tight">
+          Master Mental Math for Competitive Exams
+        </h2>
+</div>
+</div>
+<!-- Login Container -->
+<div class="w-full max-w-focus-width flex flex-col px-margin-mobile -mt-4 relative z-10">
+<!-- Card Container (The Focus Shell) -->
+<div class="bg-white border border-outline-variant p-gutter shadow-sm">
+<div class="text-center mb-8">
+<p class="font-label-caps text-label-caps text-secondary mb-2 uppercase">Training Protocol</p>
+<h3 class="font-headline-md text-headline-md text-primary">Sign In</h3>
+</div>
+<!-- Social Auth -->
+<button class="w-full flex items-center justify-center gap-3 py-3 border border-outline-variant hover:bg-surface-container transition-fast font-label-caps text-label-caps text-primary mb-6">
+<img alt="Google Logo" class="w-5 h-5" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDlNpBzokokkUf22Fsf1D8Sl21gXHvNuNh0tbPIgxu35d0cSMThzHCCxGujTpvGXSNh3xtGLfBGK6lNVdGoh8WqfR5FnwarlMKFc9Zy2MxLr6Wvjg98rpOyhfIdNBpIn-fh5bkEIh-c9vAB-c6QYGB8-i4EQ4DQKXkuiEqgdqgncWlQ6zxRAblLmpwmXJ4D2q4blOrLl2l8KTe4wn4GyvZMo8eYcM8z40TRKAejglR3nlfj1-eJnlkkJzHfDs0TyGi0rIn0AbIumJYf"/>
+          CONTINUE WITH GOOGLE
+        </button>
+<!-- Divider -->
+<div class="relative flex items-center mb-6">
+<div class="flex-grow border-t border-outline-variant"></div>
+<span class="flex-shrink mx-4 font-label-caps text-label-caps text-outline-variant">OR EMAIL</span>
+<div class="flex-grow border-t border-outline-variant"></div>
+</div>
+<!-- Credentials Form -->
+<form class="space-y-6" onsubmit="event.preventDefault();">
+<div class="space-y-1">
+<label class="font-label-caps text-label-caps text-secondary block">WORK EMAIL</label>
+<div class="focus-outline-heavy border border-outline-variant px-4 py-3 flex items-center bg-surface-container-low transition-fast">
+<span class="material-symbols-outlined text-outline mr-3" data-icon="mail">mail</span>
+<input class="bg-transparent border-none focus:ring-0 w-full font-body-md text-on-surface placeholder:text-outline-variant" placeholder="name@institution.edu" type="email"/>
+</div>
+</div>
+<div class="space-y-1">
+<label class="font-label-caps text-label-caps text-secondary block">PASSWORD</label>
+<div class="focus-outline-heavy border border-outline-variant px-4 py-3 flex items-center bg-surface-container-low transition-fast">
+<span class="material-symbols-outlined text-outline mr-3" data-icon="lock">lock</span>
+<input class="bg-transparent border-none focus:ring-0 w-full font-body-md text-on-surface placeholder:text-outline-variant" placeholder="••••••••" type="password"/>
+<button class="text-outline hover:text-primary transition-fast" type="button">
+<span class="material-symbols-outlined" data-icon="visibility">visibility</span>
+</button>
+</div>
+</div>
+<button class="w-full bg-primary text-white py-4 font-label-caps text-label-caps hover:bg-on-primary-fixed-variant snap-transition flex items-center justify-center gap-2 group">
+            INITIATE TRAINING SESSION
+            <span class="material-symbols-outlined group-hover:translate-x-1 transition-transform" data-icon="arrow_forward">arrow_forward</span>
+</button>
+</form>
+<!-- Footer Links -->
+<div class="mt-8 flex flex-col items-center gap-4 border-t border-outline-variant pt-6">
+<a class="font-label-caps text-label-caps text-secondary hover:text-primary transition-fast border-b border-transparent hover:border-primary" href="#">
+            FORGOT SECURITY ACCESS?
+          </a>
+<p class="font-body-md text-on-surface-variant text-sm">
+            New operative? <a class="text-primary font-bold hover:underline" href="#">Register Credentials</a>
+</p>
+</div>
+</div>
+<!-- Legal / Minimalist Footer -->
+<footer class="mt-8 mb-12 text-center opacity-60">
+<p class="font-label-caps text-[10px] text-outline uppercase tracking-widest">
+          © 2024 MATHCRISP ANALYTICS • INDUSTRIAL PRECISION SYSTEM
+        </p>
+</footer>
+</div>
+</main>
+<!-- Micro-interaction Script -->
+<script>
+    // Industrial Precision Focus Feedback
+    const inputs = document.querySelectorAll('input');
+    inputs.forEach(input => {
+      input.addEventListener('focus', () => {
+        input.parentElement.classList.add('bg-white');
+      });
+      input.addEventListener('blur', () => {
+        input.parentElement.classList.remove('bg-white');
+      });
+    });
+
+    // Subtle snap hover effects for buttons
+    const buttons = document.querySelectorAll('button, a');
+    buttons.forEach(btn => {
+      btn.addEventListener('mousedown', () => {
+        btn.style.transform = 'scale(0.98)';
+      });
+      btn.addEventListener('mouseup', () => {
+        btn.style.transform = 'scale(1)';
+      });
+    });
+  </script>
+</body></html>

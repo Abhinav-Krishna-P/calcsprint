@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>MATHCRISP | Professional Math Training Dashboard</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "tertiary-fixed": "#91f8b8",
+                        "surface-variant": "#e3e2e6",
+                        "surface-bright": "#faf9fd",
+                        "on-tertiary-container": "#4bb278",
+                        "secondary": "#545f72",
+                        "error": "#ba1a1a",
+                        "on-secondary-container": "#586377",
+                        "outline-variant": "#c4c6cf",
+                        "surface-tint": "#455f88",
+                        "inverse-primary": "#adc7f7",
+                        "secondary-fixed-dim": "#bcc7dd",
+                        "background": "#faf9fd",
+                        "on-primary-fixed": "#001b3c",
+                        "on-primary-fixed-variant": "#2d476f",
+                        "on-error-container": "#93000a",
+                        "on-tertiary-fixed": "#002110",
+                        "surface": "#faf9fd",
+                        "on-error": "#ffffff",
+                        "on-tertiary": "#ffffff",
+                        "tertiary-container": "#003f23",
+                        "on-surface": "#1a1c1e",
+                        "inverse-on-surface": "#f1f0f4",
+                        "on-secondary-fixed-variant": "#3c475a",
+                        "tertiary": "#002713",
+                        "on-primary-container": "#86a0cd",
+                        "outline": "#74777f",
+                        "on-tertiary-fixed-variant": "#00522f",
+                        "on-secondary": "#ffffff",
+                        "primary-fixed": "#d6e3ff",
+                        "inverse-surface": "#2f3033",
+                        "on-primary": "#ffffff",
+                        "surface-container-highest": "#e3e2e6",
+                        "on-background": "#1a1c1e",
+                        "primary": "#002045",
+                        "primary-fixed-dim": "#adc7f7",
+                        "secondary-container": "#d5e0f7",
+                        "on-surface-variant": "#43474e",
+                        "tertiary-fixed-dim": "#74db9d",
+                        "on-secondary-fixed": "#111c2c",
+                        "surface-container": "#efedf1",
+                        "surface-container-lowest": "#ffffff",
+                        "primary-container": "#1a365d",
+                        "surface-container-low": "#f4f3f7",
+                        "secondary-fixed": "#d8e3fa",
+                        "error-container": "#ffdad6",
+                        "surface-dim": "#dad9dd",
+                        "surface-container-high": "#e9e7eb"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0px",
+                        "lg": "0px",
+                        "xl": "0px",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "transition-fast": "150ms cubic-bezier(0.4, 0, 0.2, 1)",
+                        "unit": "4px",
+                        "focus-width": "640px",
+                        "gutter": "24px",
+                        "margin-desktop": "48px",
+                        "margin-mobile": "16px",
+                        "transition-instant": "50ms linear"
+                    },
+                    "fontFamily": {
+                        "headline-lg": ["Inter"],
+                        "label-caps": ["Inter"],
+                        "math-display-md": ["Inter"],
+                        "headline-md": ["Inter"],
+                        "math-display-lg": ["Inter"],
+                        "math-display-mobile": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "body-md": ["Inter"]
+                    },
+                    "fontSize": {
+                        "headline-lg": ["32px", {"lineHeight": "40px", "fontWeight": "600"}],
+                        "label-caps": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "700"}],
+                        "math-display-md": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                        "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                        "math-display-lg": ["72px", {"lineHeight": "80px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "math-display-mobile": ["40px", {"lineHeight": "48px", "fontWeight": "700"}],
+                        "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                        "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            background-color: #faf9fd;
+            font-family: 'Inter', sans-serif;
+            color: #1a1c1e;
+        }
+        .sharp-card {
+            background: #ffffff;
+            border: 1px solid #e3e2e6;
+            transition: all 150ms cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .sharp-card:hover {
+            box-shadow: 0px 4px 6px -1px rgba(0, 0, 0, 0.1);
+            border-color: #002045;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .input-block-cursor {
+            border-right: 12px solid #002045;
+            animation: blink 1s infinite step-end;
+        }
+        @keyframes blink {
+            from, to { border-color: transparent; }
+            50% { border-color: #002045; }
+        }
+        /* Snap transitions */
+        .snap-in {
+            animation: snapIn 150ms ease-out;
+        }
+        @keyframes snapIn {
+            from { opacity: 0; transform: scale(0.98); }
+            to { opacity: 1; transform: scale(1); }
+        }
+    </style>
+</head>
+<body class="bg-background overflow-x-hidden">
+<!-- Top Navigation Shell -->
+<header class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-gutter h-16 max-w-[1440px] mx-auto bg-surface-container-lowest border-b border-outline-variant">
+<div class="flex items-center gap-8">
+<span class="font-headline-md text-headline-md font-bold text-primary">MATHCRISP</span>
+<nav class="hidden md:flex gap-6 items-center h-full">
+<a class="text-primary font-bold border-b-2 border-primary h-full flex items-center px-2 font-label-caps text-label-caps" href="#">DRILLS</a>
+<a class="text-secondary hover:text-primary transition-fast font-label-caps text-label-caps" href="#">LEADERBOARD</a>
+<a class="text-secondary hover:text-primary transition-fast font-label-caps text-label-caps" href="#">BADGES</a>
+<a class="text-secondary hover:text-primary transition-fast font-label-caps text-label-caps" href="#">STATS</a>
+</nav>
+</div>
+<div class="flex items-center gap-4">
+<button class="material-symbols-outlined text-secondary hover:bg-surface-container p-2 transition-fast">settings</button>
+<button class="material-symbols-outlined text-secondary hover:bg-surface-container p-2 transition-fast">help</button>
+<div class="w-8 h-8 bg-primary-container text-on-primary-container flex items-center justify-center font-bold text-xs">
+                JD
+            </div>
+</div>
+</header>
+<!-- Sidebar Shell (Desktop) -->
+<aside class="hidden lg:flex flex-col h-full fixed left-0 top-16 py-gutter w-64 bg-surface-container-low border-r border-outline-variant">
+<div class="px-6 mb-8">
+<div class="flex items-center gap-3 mb-2">
+<div class="w-10 h-10 bg-tertiary-container flex items-center justify-center">
+<span class="material-symbols-outlined text-tertiary-fixed" style="font-variation-settings: 'FILL' 1;">military_tech</span>
+</div>
+<div>
+<p class="font-label-caps text-label-caps text-on-surface">GRANDMASTER</p>
+<p class="text-[10px] text-secondary font-bold tracking-widest uppercase">LEVEL 42</p>
+</div>
+</div>
+<div class="h-1 bg-surface-variant w-full overflow-hidden">
+<div class="h-full bg-on-tertiary-container w-[72%]"></div>
+</div>
+<p class="text-[10px] text-secondary mt-1">12.4k / 15.0k XP</p>
+</div>
+<nav class="flex-1 px-4 space-y-1">
+<a class="flex items-center gap-4 px-4 py-3 bg-primary-container text-on-primary-container font-bold border-l-4 border-primary" href="#">
+<span class="material-symbols-outlined">calculate</span>
+<span class="font-label-caps text-label-caps">Drills</span>
+</a>
+<a class="flex items-center gap-4 px-4 py-3 text-on-surface-variant hover:bg-surface-container-highest transition-fast" href="#">
+<span class="material-symbols-outlined">leaderboard</span>
+<span class="font-label-caps text-label-caps">Leaderboard</span>
+</a>
+<a class="flex items-center gap-4 px-4 py-3 text-on-surface-variant hover:bg-surface-container-highest transition-fast" href="#">
+<span class="material-symbols-outlined">military_tech</span>
+<span class="font-label-caps text-label-caps">Badges</span>
+</a>
+<a class="flex items-center gap-4 px-4 py-3 text-on-surface-variant hover:bg-surface-container-highest transition-fast" href="#">
+<span class="material-symbols-outlined">analytics</span>
+<span class="font-label-caps text-label-caps">Stats</span>
+</a>
+<a class="flex items-center gap-4 px-4 py-3 text-on-surface-variant hover:bg-surface-container-highest transition-fast" href="#">
+<span class="material-symbols-outlined">person</span>
+<span class="font-label-caps text-label-caps">Profile</span>
+</a>
+</nav>
+<div class="p-4 border-t border-outline-variant">
+<button class="w-full bg-primary text-white font-bold py-4 text-xs tracking-widest hover:brightness-110 transition-fast active:scale-[0.98]">
+                START QUICK DRILL
+            </button>
+</div>
+</aside>
+<!-- Main Canvas -->
+<main class="lg:ml-64 mt-16 p-margin-mobile md:p-margin-desktop min-h-screen">
+<div class="max-w-focus-width mx-auto flex flex-col gap-8 snap-in">
+<!-- Header Section -->
+<section class="flex justify-between items-end">
+<div>
+<h1 class="font-headline-lg text-headline-lg text-primary">Training Center</h1>
+<p class="font-body-md text-body-md text-secondary">Sharpen your mental acuity with high-precision drills.</p>
+</div>
+<div class="hidden sm:block text-right">
+<p class="font-label-caps text-label-caps text-secondary">GLOBAL RANK</p>
+<p class="font-headline-md text-headline-md text-primary">#1,284</p>
+</div>
+</section>
+<!-- Quick Stats Bento-lite -->
+<section class="grid grid-cols-1 md:grid-cols-2 gap-4">
+<div class="sharp-card p-6 flex items-center justify-between">
+<div>
+<p class="font-label-caps text-label-caps text-secondary">ACCURACY (7D)</p>
+<p class="font-headline-md text-headline-md text-primary">98.4%</p>
+</div>
+<span class="material-symbols-outlined text-on-tertiary-container text-4xl" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+</div>
+<div class="sharp-card p-6 flex items-center justify-between">
+<div>
+<p class="font-label-caps text-label-caps text-secondary">AVG. SPEED</p>
+<p class="font-headline-md text-headline-md text-primary">1.2s</p>
+</div>
+<span class="material-symbols-outlined text-primary text-4xl" style="font-variation-settings: 'FILL' 1;">timer</span>
+</div>
+</section>
+<!-- Drill Categories -->
+<section class="space-y-6">
+<h2 class="font-label-caps text-label-caps text-secondary border-b border-outline-variant pb-2">CATEGORIZED MODES</h2>
+<div class="grid grid-cols-1 gap-4">
+<!-- Basic Ops -->
+<div class="sharp-card p-8 group">
+<div class="flex items-center justify-between mb-6">
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 bg-surface-container flex items-center justify-center">
+<span class="material-symbols-outlined text-primary">add_circle</span>
+</div>
+<div>
+<h3 class="font-headline-md text-headline-md text-primary">Basic Ops</h3>
+<p class="text-xs text-secondary font-bold tracking-tight">ADDITION, SUBTRACTION, MULTIPLICATION</p>
+</div>
+</div>
+<span class="text-xs font-bold text-on-tertiary-container bg-tertiary-fixed px-2 py-1">MASTERED</span>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+<button class="flex items-center justify-between p-4 border border-outline-variant hover:border-primary hover:bg-primary-fixed transition-fast text-left">
+<span class="font-body-md text-body-md">1-digit + 1-digit</span>
+<span class="material-symbols-outlined text-sm">chevron_right</span>
+</button>
+<button class="flex items-center justify-between p-4 border border-outline-variant hover:border-primary hover:bg-primary-fixed transition-fast text-left">
+<span class="font-body-md text-body-md">2-digit addition</span>
+<span class="material-symbols-outlined text-sm">chevron_right</span>
+</button>
+<button class="flex items-center justify-between p-4 border border-outline-variant hover:border-primary hover:bg-primary-fixed transition-fast text-left">
+<span class="font-body-md text-body-md">Basic multiplication</span>
+<span class="material-symbols-outlined text-sm">chevron_right</span>
+</button>
+<button class="flex items-center justify-between p-4 border border-outline-variant hover:border-primary hover:bg-primary-fixed transition-fast text-left">
+<span class="font-body-md text-body-md">Division (up to 12)</span>
+<span class="material-symbols-outlined text-sm">chevron_right</span>
+</button>
+</div>
+</div>
+<!-- Advanced -->
+<div class="sharp-card p-8">
+<div class="flex items-center gap-4 mb-6">
+<div class="w-12 h-12 bg-surface-container flex items-center justify-center">
+<span class="material-symbols-outlined text-primary">functions</span>
+</div>
+<div>
+<h3 class="font-headline-md text-headline-md text-primary">Advanced</h3>
+<p class="text-xs text-secondary font-bold tracking-tight">ALGEBRAIC SIMPLIFICATION, FRACTIONS</p>
+</div>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+<button class="flex items-center justify-between p-4 border border-outline-variant hover:border-primary hover:bg-primary-fixed transition-fast text-left">
+<span class="font-body-md text-body-md">3-digit chaining</span>
+<span class="material-symbols-outlined text-sm">chevron_right</span>
+</button>
+<button class="flex items-center justify-between p-4 border border-outline-variant hover:border-primary hover:bg-primary-fixed transition-fast text-left">
+<span class="font-body-md text-body-md">Square roots (mental)</span>
+<span class="material-symbols-outlined text-sm">lock</span>
+</button>
+</div>
+</div>
+<!-- Logic & Series -->
+<div class="sharp-card p-8">
+<div class="flex items-center gap-4 mb-6">
+<div class="w-12 h-12 bg-surface-container flex items-center justify-center">
+<span class="material-symbols-outlined text-primary">psychology</span>
+</div>
+<div>
+<h3 class="font-headline-md text-headline-md text-primary">Logic &amp; Series</h3>
+<p class="text-xs text-secondary font-bold tracking-tight">PATTERN RECOGNITION, NUMBER SYSTEMS</p>
+</div>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+<button class="flex items-center justify-between p-4 border border-outline-variant hover:border-primary hover:bg-primary-fixed transition-fast text-left">
+<span class="font-body-md text-body-md">Fibonacci sequences</span>
+<span class="material-symbols-outlined text-sm">chevron_right</span>
+</button>
+<button class="flex items-center justify-between p-4 border border-outline-variant hover:border-primary hover:bg-primary-fixed transition-fast text-left">
+<span class="font-body-md text-body-md">Binary conversion</span>
+<span class="material-symbols-outlined text-sm">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+</section>
+<!-- Bottom CTA / Status -->
+<section class="sharp-card p-8 bg-primary-container text-on-primary-container flex flex-col md:flex-row items-center justify-between gap-6">
+<div>
+<h3 class="font-headline-md text-headline-md">Resume Training</h3>
+<p class="font-body-md text-body-md opacity-80">Continue your streak: 12 days active.</p>
+</div>
+<button class="bg-surface-container-lowest text-primary px-10 py-4 font-bold text-sm tracking-widest hover:bg-white transition-fast active:scale-[0.98]">
+                    RE-ENTER FOCUS MODE
+                </button>
+</section>
+<footer class="py-12 border-t border-outline-variant opacity-40">
+<p class="font-label-caps text-label-caps text-center">MATHCRISP SYSTEM v4.2.0 • INTELLECTUAL PROPERTY OF CRISP CORE</p>
+</footer>
+</div>
+</main>
+<!-- Bottom Navigation Shell (Mobile) -->
+<nav class="lg:hidden fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-margin-mobile pb-safe bg-surface-container-lowest h-16 border-t border-outline-variant">
+<a class="flex flex-col items-center gap-1 text-primary" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">calculate</span>
+<span class="font-label-caps text-[10px]">DRILLS</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-secondary" href="#">
+<span class="material-symbols-outlined">leaderboard</span>
+<span class="font-label-caps text-[10px]">RANK</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-secondary" href="#">
+<span class="material-symbols-outlined">query_stats</span>
+<span class="font-label-caps text-[10px]">STATS</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-secondary" href="#">
+<span class="material-symbols-outlined">person</span>
+<span class="font-label-caps text-[10px]">ME</span>
+</a>
+</nav>
+<script>
+        // Micro-interaction for hover sound or haptic simulation
+        document.querySelectorAll('button, a').forEach(el => {
+            el.addEventListener('mousedown', () => {
+                el.style.transform = 'scale(0.98)';
+            });
+            el.addEventListener('mouseup', () => {
+                el.style.transform = 'scale(1)';
+            });
+        });
+
+        // Quick Fade-in on load
+        window.onload = () => {
+            document.body.classList.add('opacity-0');
+            setTimeout(() => {
+                document.body.classList.remove('opacity-0');
+                document.body.classList.add('transition-opacity', 'duration-300', 'opacity-100');
+            }, 50);
+        };
+    </script>
+</body></html>
