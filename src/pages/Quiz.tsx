@@ -5,7 +5,7 @@ import type { Question } from "../questionGenerators";
 import { TimerBar } from "../components/TimerBar";
 import { Card } from "../components/Card";
 import { Button } from "../components/Button";
-import { X } from "lucide-react";
+import { X, ArrowRight } from "lucide-react";
 
 interface LocationState {
   numQuestions: number;
@@ -355,9 +355,27 @@ export const Quiz: React.FC = () => {
                     className="w-full text-center text-3xl font-extrabold tracking-wide py-3 bg-app-bg border-2 border-app-outline-variant rounded-app text-app-text focus:outline-none focus:border-app-primary transition-all tabular-nums block-cursor"
                   />
                   
-                  <p className="text-[9px] uppercase font-bold tracking-widest text-app-secondary mt-3">
-                    Press Enter / Go to submit
-                  </p>
+                  {mode.id !== "divisibility" ? (
+                    <p className="text-[9px] uppercase font-bold tracking-widest text-app-secondary mt-3">
+                      Press Enter or tap Submit
+                    </p>
+                  ) : (
+                    <p className="text-[9px] uppercase font-bold tracking-widest text-app-secondary mt-3">
+                      Tap Yes/No to answer
+                    </p>
+                  )}
+
+                  {mode.id !== "divisibility" && (
+                    <Button
+                      type="submit"
+                      variant="primary"
+                      disabled={feedbackState !== "none" || !userAnswer.trim()}
+                      className="w-full mt-4 py-3.5 font-bold text-base shadow-sm flex items-center justify-center gap-2 group transition-all duration-200"
+                    >
+                      Submit
+                      <ArrowRight size={18} className="transition-transform group-hover:translate-x-1" />
+                    </Button>
+                  )}
 
                   {/* Add helpful buttons for Divisibility Yes/No question, to help mobile speed! */}
                   {mode.id === "divisibility" && (

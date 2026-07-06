@@ -65,7 +65,13 @@ export const Navbar: React.FC = () => {
   return (
     <>
       {/* Desktop Header & Top bar for mobile */}
-      <header className="fixed top-0 left-0 w-full z-40 bg-app-surface border-b border-app-outline-variant h-16 flex items-center px-4 md:px-8 justify-between">
+      <header
+        className="fixed top-0 left-0 w-full z-40 bg-app-surface border-b border-app-outline-variant flex items-center px-4 md:px-8 justify-between"
+        style={{
+          height: "calc(4rem + env(safe-area-inset-top))",
+          paddingTop: "env(safe-area-inset-top)",
+        }}
+      >
         <div className="flex items-center gap-8">
           <Link to="/" className="flex items-center gap-2 font-sans text-xl font-extrabold text-app-primary tracking-tight select-none">
             <Zap size={20} className="text-app-accent fill-app-accent" />
@@ -132,7 +138,13 @@ export const Navbar: React.FC = () => {
 
       {/* Mobile Bottom Navigation (Visible only on mobile screens when logged in) */}
       {user && userProfile && (
-        <nav className="md:hidden fixed bottom-0 left-0 w-full z-40 bg-app-surface border-t border-app-outline-variant h-16 flex items-center justify-around px-2 pb-safe-bottom">
+        <nav
+          className="md:hidden fixed bottom-0 left-0 w-full z-40 bg-app-surface border-t border-app-outline-variant flex items-center justify-around px-2"
+          style={{
+            height: "calc(4rem + env(safe-area-inset-bottom))",
+            paddingBottom: "env(safe-area-inset-bottom)",
+          }}
+        >
           <Link
             to="/"
             className={`flex flex-col items-center justify-center w-20 h-12 text-xs font-bold transition-all ${
@@ -186,7 +198,10 @@ export const Navbar: React.FC = () => {
       )}
 
       {/* Spacers for layouts */}
-      <div className="h-16 w-full shrink-0" />
+      <div
+        className="w-full shrink-0"
+        style={{ height: "calc(4rem + env(safe-area-inset-top))" }}
+      />
     </>
   );
 };
