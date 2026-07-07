@@ -40,6 +40,7 @@ interface AuthContextType {
   logout: () => Promise<void>;
   createProfile: (username: string, avatarId: string) => Promise<void>;
   checkUsernameUnique: (username: string) => Promise<boolean>;
+  updateUsername: (newUsername: string) => Promise<void>;
   updateQuizStats: (
     modeId: string, 
     correctCount: number, 
@@ -147,6 +148,71 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     setUserProfile(profileData);
   };
 
+  // Update username (atomically releasing old lock and acquiring new lock)
+  const updateUsername = async (newUsername: string) => {
+    if (!user || !userProfile) throw new Error("User must be logged in with a profile.");
+
+    const oldUsername = userProfile.username;
+    const oldUsernameLower = oldUsername.toLowerCase();
+    const cleanUsername = newUsername.trim();
+    const newUsernameLower = cleanUsername.toLowerCase();
+
+    // If username is exactly the same, do nothing
+    if (oldUsername === cleanUsername) return;
+
+    // RegEx validation: letters, numbers, underscores only
+    const validPattern = /^[a-zA-Z0-9_]+$/;
+    if (!validPattern.test(cleanUsername)) {
+      throw new Error("Username can only contain letters, numbers, and underscores.");
+    }
+    if (cleanUsername.length < 3) {
+      throw new Error("Username must be at least 3 characters.");
+    }
+    if (cleanUsername.length > 15) {
+      throw new Error("Username must be 15 characters or less.");
+    }
+
+    const batch = writeBatch(db);
+    const userDocRef = doc(db, "users", user.uid);
+
+    // If only casing changes, we don't need to change the usernames lock document
+    if (oldUsernameLower === newUsernameLower) {
+      batch.update(userDocRef, { username: cleanUsername });
+      await batch.commit();
+
+      setUserProfile({
+        ...userProfile,
+        username: cleanUsername
+      });
+      return;
+    }
+
+    // Verify uniqueness of the new username
+    const isUnique = await checkUsernameUnique(newUsernameLower);
+    if (!isUnique) {
+      throw new Error("Username is already taken.");
+    }
+
+    const oldUsernameRef = doc(db, "usernames", oldUsernameLower);
+    const newUsernameRef = doc(db, "usernames", newUsernameLower);
+
+    // Atomic update: release old lock, acquire new lock, update profile
+    batch.delete(oldUsernameRef);
+    batch.set(newUsernameRef, { uid: user.uid });
+    batch.update(userDocRef, {
+      username: cleanUsername,
+      usernameLower: newUsernameLower
+    });
+
+    await batch.commit();
+
+    setUserProfile({
+      ...userProfile,
+      username: cleanUsername,
+      usernameLower: newUsernameLower
+    });
+  };
+
   // Update statistics after completing a quiz and check for badges
   const updateQuizStats = async (
     modeId: string, 
@@ -243,6 +309,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       logout,
       createProfile,
       checkUsernameUnique,
+      updateUsername,
       updateQuizStats
     }}>
       {children}

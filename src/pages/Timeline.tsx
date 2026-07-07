@@ -31,7 +31,7 @@ interface HistoryEntry {
 }
 
 export const Timeline: React.FC = () => {
-  const { user } = useAuth();
+  const { user, userProfile } = useAuth();
   const [history, setHistory] = useState<HistoryEntry[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
@@ -173,15 +173,42 @@ export const Timeline: React.FC = () => {
   // --- GRID MAP GENERATOR ---
   const generateContributionGrid = () => {
     const today = new Date();
-    const startDate = new Date();
-    startDate.setDate(today.getDate() - 365); // Go back 365 days
-    const startDay = startDate.getDay(); // Align to Sunday of that week
+    
+    // Get account creation date
+    const createdDate = userProfile?.createdAt
+      ? new Date(userProfile.createdAt.seconds * 1000)
+      : new Date();
+      
+    // Set start date to the beginning of the creation week (Sunday)
+    const startDate = new Date(createdDate);
+    startDate.setHours(0, 0, 0, 0);
+    const startDay = startDate.getDay();
     startDate.setDate(startDate.getDate() - startDay);
+
+    // Calculate number of weeks between startDate and today
+    // Align today to the end of the current week (Saturday)
+    const endDate = new Date(today);
+    endDate.setHours(23, 59, 59, 999);
+    const endDay = endDate.getDay();
+    endDate.setDate(endDate.getDate() + (6 - endDay));
+
+    const diffTime = Math.max(0, endDate.getTime() - startDate.getTime());
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+    let numWeeks = Math.ceil(diffDays / 7);
+
+    // Always show at least 4 weeks so the grid doesn't look empty/squished
+    if (numWeeks < 4) {
+      numWeeks = 4;
+      // Adjust start date backwards to show at least 4 weeks
+      startDate.setDate(endDate.getDate() - (numWeeks * 7 - 1));
+      const newStartDay = startDate.getDay();
+      startDate.setDate(startDate.getDate() - newStartDay);
+    }
 
     const cols: { date: Date; dateStr: string; count: number }[][] = [];
     const runner = new Date(startDate);
 
-    for (let c = 0; c < 53; c++) {
+    for (let c = 0; c < numWeeks; c++) {
       const week: { date: Date; dateStr: string; count: number }[] = [];
       for (let r = 0; r < 7; r++) {
         const dStr = runner.toISOString().split("T")[0];
@@ -411,6 +438,13 @@ export const Timeline: React.FC = () => {
     ? Math.round(history.reduce((acc, curr) => acc + curr.accuracy, 0) / totalAttemptsCount) 
     : 0;
 
+  const joinMonthYear = userProfile?.createdAt
+    ? new Date(userProfile.createdAt.seconds * 1000).toLocaleDateString(undefined, {
+        month: 'long',
+        year: 'numeric'
+      })
+    : "";
+
   return (
     <div className="min-h-screen bg-app-bg text-app-text p-4 md:p-8 max-w-5xl mx-auto pb-24 md:pb-8 select-none">
       
@@ -480,7 +514,7 @@ export const Timeline: React.FC = () => {
         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 mb-6">
           <div>
             <h3 className="text-sm font-extrabold text-app-primary uppercase tracking-wider">
-              {totalAttemptsCount} sessions in the last year
+              {totalAttemptsCount} sessions {joinMonthYear ? `since ${joinMonthYear}` : "since joining"}
             </h3>
             <p className="text-xs text-app-secondary mt-0.5 font-semibold">
               Click on any square to filter attempts for that date.

@@ -1,11 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useAuth } from "../context/AuthContext";
 import { getAvatarById, AVATARS } from "../components/AvatarSelector";
 import { GAME_MODES } from "../questionGenerators";
 import { Card } from "../components/Card";
+import { Button } from "../components/Button";
 import { doc, updateDoc } from "firebase/firestore";
 import { db } from "../config/firebase";
-import { Award, BarChart2, Edit2, Calendar } from "lucide-react";
+import { Award, BarChart2, Edit2, Calendar, CheckCircle, AlertCircle, Loader2 } from "lucide-react";
 
 interface BadgeConfig {
   id: string;
@@ -47,10 +48,86 @@ const BADGES_CONFIG: BadgeConfig[] = [
 ];
 
 export const Profile: React.FC = () => {
-  const { user, userProfile } = useAuth();
+  const { user, userProfile, updateUsername, checkUsernameUnique } = useAuth();
   const [showAvatarEditor, setShowAvatarEditor] = useState<boolean>(false);
   const [updating, setUpdating] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
+
+  // Username edit states
+  const [isEditingName, setIsEditingName] = useState<boolean>(false);
+  const [newUsername, setNewUsername] = useState<string>(userProfile?.username || "");
+  const [isCheckingUnique, setIsCheckingUnique] = useState<boolean>(false);
+  const [isNameUnique, setIsNameUnique] = useState<boolean | null>(null);
+  const [nameError, setNameError] = useState<string | null>(null);
+
+  // Debounce username uniqueness checks
+  useEffect(() => {
+    if (!isEditingName || !userProfile) return;
+
+    const cleanUsername = newUsername.trim();
+    if (cleanUsername === userProfile.username) {
+      setIsNameUnique(true);
+      setNameError(null);
+      return;
+    }
+
+    if (cleanUsername.length < 3) {
+      setIsNameUnique(null);
+      setNameError(null);
+      return;
+    }
+
+    const validPattern = /^[a-zA-Z0-9_]+$/;
+    if (!validPattern.test(cleanUsername)) {
+      setIsNameUnique(false);
+      setNameError("Username can only contain letters, numbers, and underscores.");
+      return;
+    } else {
+      setNameError(null);
+    }
+
+    setIsCheckingUnique(true);
+    const delayDebounceFn = setTimeout(async () => {
+      try {
+        const unique = await checkUsernameUnique(cleanUsername);
+        setIsNameUnique(unique);
+        if (!unique) {
+          setNameError("Username is already taken.");
+        } else {
+          setNameError(null);
+        }
+      } catch (err) {
+        console.error("Checking username uniqueness error", err);
+      } finally {
+        setIsCheckingUnique(false);
+      }
+    }, 500);
+
+    return () => clearTimeout(delayDebounceFn);
+  }, [newUsername, isEditingName, userProfile, checkUsernameUnique]);
+
+  const handleSaveName = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!user || !userProfile || updating) return;
+    const cleanUsername = newUsername.trim();
+    if (cleanUsername === userProfile.username) {
+      setIsEditingName(false);
+      return;
+    }
+
+    setUpdating(true);
+    setError(null);
+    setNameError(null);
+    try {
+      await updateUsername(cleanUsername);
+      setIsEditingName(false);
+    } catch (err: any) {
+      console.error("Failed to update username", err);
+      setNameError(err.message || "Failed to save username change.");
+    } finally {
+      setUpdating(false);
+    }
+  };
 
   const activeAvatar = userProfile?.avatarId ? getAvatarById(userProfile.avatarId) : null;
 
@@ -118,9 +195,79 @@ export const Profile: React.FC = () => {
               </button>
             </div>
 
-            <h2 className="text-xl font-extrabold text-app-primary tracking-tight">
-              {userProfile.username}
-            </h2>
+            {isEditingName ? (
+              <form onSubmit={handleSaveName} className="w-full mt-2 max-w-[240px] flex flex-col items-center">
+                <div className="relative w-full">
+                  <input
+                    type="text"
+                    required
+                    value={newUsername}
+                    onChange={(e) => setNewUsername(e.target.value.replace(/\s+/g, ""))}
+                    maxLength={15}
+                    disabled={updating}
+                    className="w-full text-center px-3 py-1.5 bg-app-bg border border-app-outline-variant rounded-app text-sm text-app-text placeholder-app-secondary/50 focus:outline-none focus:border-app-primary transition-all pr-8"
+                  />
+                  <div className="absolute inset-y-0 right-0 pr-2.5 flex items-center pointer-events-none">
+                    {isCheckingUnique && <Loader2 size={14} className="animate-spin text-app-secondary" />}
+                    {!isCheckingUnique && isNameUnique === true && newUsername.trim() !== userProfile.username && (
+                      <CheckCircle size={14} className="text-app-success" />
+                    )}
+                    {!isCheckingUnique && isNameUnique === false && (
+                      <AlertCircle size={14} className="text-app-error" />
+                    )}
+                  </div>
+                </div>
+
+                {nameError && (
+                  <p className="text-[10px] text-app-error mt-1 text-center leading-tight">
+                    {nameError}
+                  </p>
+                )}
+
+                <div className="flex justify-center gap-2 mt-3 w-full">
+                  <Button
+                    type="submit"
+                    disabled={updating || isCheckingUnique || isNameUnique === false || newUsername.trim().length < 3}
+                    variant="primary"
+                    className="py-1.5 px-4 text-xs h-8"
+                  >
+                    {updating ? "Saving..." : "Save"}
+                  </Button>
+                  <Button
+                    type="button"
+                    onClick={() => {
+                      setIsEditingName(false);
+                      setNewUsername(userProfile.username);
+                      setNameError(null);
+                    }}
+                    variant="secondary"
+                    disabled={updating}
+                    className="py-1.5 px-4 text-xs h-8"
+                  >
+                    Cancel
+                  </Button>
+                </div>
+              </form>
+            ) : (
+              <div className="flex items-center gap-2 mt-1 select-none">
+                <h2 className="text-xl font-extrabold text-app-primary tracking-tight">
+                  {userProfile.username}
+                </h2>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setIsEditingName(true);
+                    setNewUsername(userProfile.username);
+                    setIsNameUnique(null);
+                    setNameError(null);
+                  }}
+                  className="p-1 hover:text-app-primary text-app-secondary transition-colors cursor-pointer"
+                  title="Edit Username"
+                >
+                  <Edit2 size={14} />
+                </button>
+              </div>
+            )}
             
             <p className="text-[10px] text-app-secondary uppercase font-bold tracking-widest mt-1 flex items-center gap-1">
               <Calendar size={12} />
