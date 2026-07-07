@@ -1,6 +1,6 @@
 import type { ModeConfig } from "./types";
 import { generateLetterToNumber, generateMirrorLetter } from "./alphabet";
-import { generate1DigitAddSub, generate2DigitAddSub, generate3Digit2DigitAddSub } from "./arithmetic";
+import { generate1DigitAddSub, generate2DigitAddSub, generate3Digit2DigitAddSub, generateAddSubSequence } from "./arithmetic";
 import { generate1DigitMult, generate2DigitMult, generate3DigitMult } from "./multiplication";
 import { generate2DigitDiv1Digit, generate4DigitDiv2Digit } from "./division";
 import { 
@@ -61,6 +61,14 @@ export const GAME_MODES: ModeConfig[] = [
     category: "Arithmetic",
     description: "Addition and subtraction mixing 3-digit and 2-digit numbers.",
     generate: generate3Digit2DigitAddSub,
+    inputType: "numeric"
+  },
+  {
+    id: "add_sub_sequence",
+    name: "Add & Sub Sequence",
+    category: "Arithmetic",
+    description: "Calculate sequences of 3 to 5 numbers with addition and subtraction.",
+    generate: generateAddSubSequence,
     inputType: "numeric"
   },
 
