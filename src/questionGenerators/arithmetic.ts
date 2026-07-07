@@ -68,3 +68,50 @@ export const generate3Digit2DigitAddSub = (): Question => {
     };
   }
 };
+
+// Add & Sub Sequence mode generator (3 to 5 numbers with + and -)
+export const generateAddSubSequence = (): Question => {
+  let questionStr = "";
+  let answer = 0;
+
+  while (true) {
+    const count = getRandomInt(3, 5); // 3 to 5 numbers
+    const numbers: number[] = [];
+    const operators: string[] = [];
+
+    for (let i = 0; i < count; i++) {
+      const is2Digit = Math.random() > 0.3;
+      numbers.push(is2Digit ? getRandomInt(10, 99) : getRandomInt(1, 9));
+    }
+
+    for (let i = 0; i < count - 1; i++) {
+      operators.push(Math.random() > 0.5 ? "+" : "-");
+    }
+
+    let currentAnswer = numbers[0];
+    let tempStr = `${numbers[0]}`;
+
+    for (let i = 0; i < count - 1; i++) {
+      const op = operators[i];
+      const num = numbers[i + 1];
+      tempStr += ` ${op} ${num}`;
+      if (op === "+") {
+        currentAnswer += num;
+      } else {
+        currentAnswer -= num;
+      }
+    }
+
+    if (currentAnswer >= 0) {
+      questionStr = tempStr;
+      answer = currentAnswer;
+      break;
+    }
+  }
+
+  return {
+    question: questionStr,
+    answer: answer
+  };
+};
+
