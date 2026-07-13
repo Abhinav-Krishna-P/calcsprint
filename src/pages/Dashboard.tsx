@@ -4,7 +4,7 @@ import { useAuth } from "../context/AuthContext";
 import { GAME_MODES } from "../questionGenerators";
 import type { ModeCategory } from "../questionGenerators";
 import { Card } from "../components/Card";
-import { Trophy, Star, Zap, Keyboard, Award } from "lucide-react";
+import { Trophy, Star, Zap, Keyboard, Award, Binary } from "lucide-react";
 import { getAvatarById } from "../components/AvatarSelector";
 
 export const Dashboard: React.FC = () => {
@@ -18,7 +18,8 @@ export const Dashboard: React.FC = () => {
     { name: "Multiplication", icon: <Star size={18} />, color: "border-l-4 border-l-purple-500" },
     { name: "Division", icon: <Trophy size={18} />, color: "border-l-4 border-l-emerald-500" },
     { name: "Powers", icon: <Award size={18} />, color: "border-l-4 border-l-rose-500" },
-    { name: "Divisibility", icon: <Keyboard size={18} />, color: "border-l-4 border-l-indigo-500" }
+    { name: "Divisibility", icon: <Keyboard size={18} />, color: "border-l-4 border-l-indigo-500" },
+    { name: "Algebra", icon: <Binary size={18} />, color: "border-l-4 border-l-pink-500" }
   ];
 
   const handleModeClick = (modeId: string) => {

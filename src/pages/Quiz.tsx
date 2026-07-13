@@ -163,6 +163,21 @@ export const Quiz: React.FC = () => {
       if (c === "no") return noValues.includes(u);
     }
 
+    // Support list equivalence (e.g. for quadratic roots "2, 3" or single root "3" written as "3, 3")
+    if (c.includes(",") || u.includes(",")) {
+      const splitAndClean = (str: string) => {
+        return str
+          .split(/[\s,]+/)
+          .map(item => item.replace(/^(x=)/, "").trim())
+          .filter(Boolean);
+      };
+      const uParts = Array.from(new Set(splitAndClean(u))).sort();
+      const cParts = Array.from(new Set(splitAndClean(c))).sort();
+      if (uParts.length > 0 && uParts.length === cParts.length) {
+        return uParts.every((val, index) => val === cParts[index]);
+      }
+    }
+
     return u === c;
   };
 

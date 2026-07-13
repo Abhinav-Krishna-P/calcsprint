@@ -16,6 +16,9 @@ import {
   generateSqrt5Digit
 } from "./powers";
 import { generateDivisibility } from "./divisibility";
+import { generateBodmasQuestion } from "./bodmas";
+import { generateQuadraticQuestion } from "./quadratic";
+import { generateFactorialQuestion } from "./factorial";
 
 export * from "./types";
 
@@ -69,6 +72,14 @@ export const GAME_MODES: ModeConfig[] = [
     category: "Arithmetic",
     description: "Calculate sequences of 3 to 5 numbers with addition and subtraction.",
     generate: generateAddSubSequence,
+    inputType: "numeric"
+  },
+  {
+    id: "bodmas",
+    name: "BODMAS",
+    category: "Arithmetic",
+    description: "Solve expressions with mixed operators (+, -, ×, ÷) and parentheses.",
+    generate: generateBodmasQuestion,
     inputType: "numeric"
   },
 
@@ -210,6 +221,22 @@ export const GAME_MODES: ModeConfig[] = [
     description: "Answer Yes/No whether a number is divisible by a given divisor.",
     generate: generateDivisibility,
     inputType: "text"
+  },
+  {
+    id: "quadratic",
+    name: "Quadratic Equations",
+    category: "Algebra",
+    description: "Find the roots of x² + Bx + C = 0. Enter both roots separated by comma (e.g. 2, 3 or -1, 4). Order doesn't matter.",
+    generate: generateQuadraticQuestion,
+    inputType: "text"
+  },
+  {
+    id: "factorial",
+    name: "Factorials & P&C",
+    category: "Algebra",
+    description: "Calculate factorials (n!) and basic permutations/combinations (nPr, nCr).",
+    generate: generateFactorialQuestion,
+    inputType: "numeric"
   }
 ];
 

@@ -9,7 +9,8 @@ export type ModeCategory =
   | "Multiplication" 
   | "Division" 
   | "Powers" 
-  | "Divisibility";
+  | "Divisibility"
+  | "Algebra";
 
 export interface ModeConfig {
   id: string;
